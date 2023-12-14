@@ -49,22 +49,6 @@ export class UserRepository implements IRepository<User> {
     );
   }
 
-  // validateEmailAndPassword() {
-  //   if (
-  //     this.getEmailInput().value.includes('@') &&
-  //     this.getEmailInput().value.indexOf('.') >
-  //       this.getEmailInput().value.indexOf('@') &&
-  //     this.getEmailInput().value.length >= 5 &&
-  //     this.getPasswordInput().value.length >= 5 &&
-  //     /\d/.test(this.getPasswordInput().value) &&
-  //     /[a-zA-Z]/.test(this.getPasswordInput().value)
-  //   ) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   isEmailValid(email: string) {
     if (
       email.includes('@') &&
@@ -86,10 +70,14 @@ export class UserRepository implements IRepository<User> {
   }
 
   validateEmailAndPassword(email: string, password: string) {
+    if (!this.getByLoginAndPassword(email, password)) {
+      return false;
+    }
+
     if (!this.isEmailValid(email)) {
       return false;
     }
 
-    return this.isPasswordValid(password);
+    return this.getByLoginAndPassword(email, password);
   }
 }

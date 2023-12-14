@@ -1,4 +1,4 @@
 export enum UserType {
-  Admin = "Admin",
-  Guest = "Guest",
+  Admin = 'Admin@gmail.com',
+  Guest = 'Guest',
 }
