@@ -70,14 +70,10 @@ export class UserRepository implements IRepository<User> {
   }
 
   validateEmailAndPassword(email: string, password: string) {
-    if (!this.getByLoginAndPassword(email, password)) {
-      return false;
+    if (this.getByLoginAndPassword(email, password)) {
+      return this.getByLoginAndPassword(email, password);
+    } else {
+      false;
     }
-
-    if (!this.isEmailValid(email)) {
-      return false;
-    }
-
-    return this.getByLoginAndPassword(email, password);
   }
 }
