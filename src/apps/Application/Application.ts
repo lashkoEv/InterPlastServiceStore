@@ -34,6 +34,7 @@ export class Application {
           setTimeout(() => {
             this.spinner.getComponent().remove();
             console.log('succes authorization');
+            console.log(this.currentUser);
 
             render(this.app, this.authorizationWindow.getComponent());
           }, 2000);
