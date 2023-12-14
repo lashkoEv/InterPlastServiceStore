@@ -15,6 +15,20 @@ export class UserRepository implements IRepository<User> {
   add(user: User): void {
     this.users.push(user);
   }
+  remove(user: User): void {
+    const remove = this.users.findIndex((u) => u === user);
+    if (remove !== -1) {
+      this.users.splice(remove, 1);
+    }
+  }
+  update(updatedUser: User): void {
+    const update = this.users.findIndex(
+      (user) => user.getId() === updatedUser.getId()
+    );
+    if (update !== -1) {
+      this.users[update] = updatedUser;
+    }
+  }
 
   addMany(users: User[]): void {
     users.forEach((user) => this.users.push(user));
