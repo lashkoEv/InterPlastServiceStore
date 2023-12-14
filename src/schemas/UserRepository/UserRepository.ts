@@ -8,28 +8,6 @@ export class UserRepository implements IRepository<User> {
     this.users = [];
   }
 
-  save(users: User[] | null): void {
-    if (users) {
-      users.forEach((user) => {
-        localStorage.setItem(user.getId(), JSON.stringify(user));
-      });
-    }
-
-    this.users.forEach((user) => {
-      localStorage.setItem(user.getId(), JSON.stringify(user));
-    });
-  }
-
-  load(): void {
-    for (const key in localStorage) {
-      if (key.includes("user")) {
-        const user = JSON.parse(localStorage.getItem(key));
-
-        this.add(new User(user.id, user.login, user.password, user.userType));
-      }
-    }
-  }
-
   getAll(): User[] {
     return this.users;
   }
