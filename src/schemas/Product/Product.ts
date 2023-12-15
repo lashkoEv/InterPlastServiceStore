@@ -6,7 +6,7 @@ export class Product implements IProduct {
     private title: string,
     private isAvailable: boolean,
     private description: string,
-    private price: string,
+    private price: number,
     private quantity: number,
     private manufacturer: string,
     private imageURL: string
@@ -24,7 +24,7 @@ export class Product implements IProduct {
   getDescription(): string {
     return this.description;
   }
-  getPrice(): string {
+  getPrice(): number {
     return this.price;
   }
   getQuantity(): number {
@@ -46,7 +46,7 @@ export class Product implements IProduct {
   setDescription(description: string): void {
     this.description = description;
   }
-  setPrice(price: string): void {
+  setPrice(price: number): void {
     this.price = price;
   }
   setQuantity(quantity: number): void {
