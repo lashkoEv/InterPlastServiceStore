@@ -29,7 +29,7 @@ export class ProductCard implements IComponent {
 
     this.priceComponent = new Component({
       className: "price",
-      textContent: `${product.getPrice()}₴`,
+      textContent: `${product.getPrice()} ₴`,
     });
 
     this.buyButton = new Button({

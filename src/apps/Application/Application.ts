@@ -41,7 +41,7 @@ export class Application {
 
     this.products = new ProductsWrapper();
 
-    this.pagination = new Pagination(4);
+    this.pagination = new Pagination(8);
   }
 
   productsToCards(products: Product[]) {
@@ -64,7 +64,7 @@ export class Application {
 
             buttons.forEach((button) => button.classList.remove("active"));
             btn.classList.add("active");
-            
+
             this.setDisplayedProducts(products);
           },
         },
@@ -73,6 +73,8 @@ export class Application {
       buttons.push(btn);
     }
 
+    buttons[0].classList.add("active");
+    
     render(this.pagination.getComponent(), buttons);
   }
 
