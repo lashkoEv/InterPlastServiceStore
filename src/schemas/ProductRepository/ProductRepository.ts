@@ -60,96 +60,88 @@ export class ProductRepository implements IRepository<Product> {
     );
   }
 
-  sortByTitle(asc: boolean, products: Product[]) {
+  sortByTitleAsc(products: Product[]) {
     return products.sort((a, b) => {
-      if (asc) {
-        if (a.getTitle().toLowerCase() < b.getTitle().toLowerCase()) {
-          return -1;
-        } else {
-          return 1;
-        }
+      if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
+
+      if (a.getTitle().toLowerCase() < b.getTitle().toLowerCase()) {
+        return -1;
       } else {
-        if (a.getTitle().toLowerCase() > b.getTitle().toLowerCase()) {
-          return -1;
-        } else {
-          return 1;
-        }
+        return 1;
       }
     });
   }
 
-  sortByPrice(asc: boolean, products: Product[]) {
+  sortByTitleDesc(products: Product[]) {
     return products.sort((a, b) => {
-      if (asc) {
-        if (a.getPrice() < b.getPrice()) {
-          return -1;
-        } else {
-          return 1;
-        }
+      if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
+
+      if (a.getTitle().toLowerCase() > b.getTitle().toLowerCase()) {
+        return -1;
       } else {
-        if (a.getPrice() > b.getPrice()) {
-          return -1;
-        } else {
-          return 1;
-        }
+        return 1;
       }
     });
   }
 
-  sortByAvailability(asc: boolean, products: Product[]) {
+  sortByPriceAsc(products: Product[]) {
     return products.sort((a, b) => {
-      if (asc) {
-        if (a.getAvailability() < b.getAvailability()) {
-          return -1;
-        } else {
-          return 1;
-        }
+      if (a.getPrice() === b.getPrice()) return 0;
+
+      if (a.getPrice() < b.getPrice()) {
+        return -1;
       } else {
-        if (a.getAvailability() > b.getAvailability()) {
-          return -1;
-        } else {
-          return 1;
-        }
+        return 1;
       }
     });
   }
-  //   save(products: Product[] | null): void {
-  //     if (products) {
-  //       products.forEach((product) => {
-  //         localStorage.setItem(
-  //           product.getID().toString(),
-  //           JSON.stringify(product)
-  //         );
-  //       });
-  //     }
 
-  //     this.products.forEach((product) => {
-  //       localStorage.setItem(product.getID().toString(), JSON.stringify(product));
-  //     });
-  //   }
+  sortByPriceDesc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getPrice() === b.getPrice()) return 0;
 
-  //   load(): void {
-  //     for (const key in localStorage) {
-  //       if (key.includes("product")) {
-  //         const productData = localStorage.getItem(key);
+      if (a.getPrice() > b.getPrice()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
 
-  //         if (productData !== null) {
-  //           const parsedProduct = JSON.parse(productData);
+  sortByAvailabilityAsc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getAvailability() === b.getAvailability()) return 0;
 
-  //           this.add(
-  //             new Product(
-  //               parsedProduct.id,
-  //               parsedProduct.title,
-  //               parsedProduct.isAvailable,
-  //               parsedProduct.description,
-  //               parsedProduct.price,
-  //               parsedProduct.quantity,
-  //               parsedProduct.manufacturer,
-  //               parsedProduct.imageURL
-  //             )
-  //           );
-  //         }
-  //       }
-  //     }
-  //   }
+      if (a.getAvailability() > b.getAvailability()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  sortByAvailabilityDesc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getAvailability() < b.getAvailability()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  getByPage(page: number, amount: number, products: Product[]): Product[] {
+    const start = (page - 1) * amount;
+    let end = page * amount;
+
+    if (end > products.length - 1) end = products.length;
+
+    const byPage = products.slice(start, end);
+
+    if (byPage.length === 0) {
+      return this.getByPage(page - 1, amount, products);
+    }
+
+    return byPage;
+  }
 }

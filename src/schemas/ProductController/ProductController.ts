@@ -66,18 +66,24 @@ export class ProductController {
   }
 
   search(search: string) {
-    this.productRepository.search(search);
+    return this.productRepository.search(search);
   }
 
   sortByTitle(asc: boolean, products: Product[]) {
-    this.productRepository.sortByTitle(asc, products);
+    return asc
+      ? this.productRepository.sortByTitleAsc(products)
+      : this.productRepository.sortByTitleDesc(products);
   }
 
   sortByPrice(asc: boolean, products: Product[]) {
-    this.productRepository.sortByPrice(asc, products);
+    return asc
+      ? this.productRepository.sortByPriceAsc(products)
+      : this.productRepository.sortByPriceDesc(products);
   }
 
   sortByAvailability(asc: boolean, products: Product[]) {
-    this.productRepository.sortByAvailability(asc, products);
+    return asc
+      ? this.productRepository.sortByAvailabilityAsc(products)
+      : this.productRepository.sortByAvailabilityDesc(products);
   }
 }
