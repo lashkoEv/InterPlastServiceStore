@@ -105,4 +105,13 @@ export class ProductRepository implements IRepository<Product> {
       }      
     })
   }
+
+  filterByAvailability(products: Product[]){
+    return products.filter((el)=>{
+      
+      if(el.getAvailability()){
+        return true;
+      }      
+    })
+  }
 }
