@@ -9,13 +9,16 @@ export class ProductController {
 
     this.init();
   }
+
   private init() {
     this.productRepository.save(getProducts());
     this.productRepository.load();
   }
+
   getAll() {
     return this.productRepository.getAll();
   }
+
   update(
     product: Product,
     title: string,
@@ -37,9 +40,11 @@ export class ProductController {
       imageURL
     );
   }
+
   delete(product: Product) {
     this.productRepository.delete(product);
   }
+  
   add(
     title: string,
     isAvailable: boolean,

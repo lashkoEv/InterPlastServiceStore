@@ -89,7 +89,20 @@ export class ProductRepository implements IRepository<Product> {
       }
     }
   }
+
   getLast() {
     return this.products[this.products.length - 1];
+  }
+
+  // --filters
+
+  filterByPrice(products: Product[], HighestPrice: number){
+    return products.filter((el)=>{
+      const productPrice = +el.getPrice();
+      
+      if(productPrice <= HighestPrice){
+        return true;
+      }      
+    })
   }
 }
