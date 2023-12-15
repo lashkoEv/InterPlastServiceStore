@@ -9,14 +9,12 @@ export class ProductsWrapper implements IComponent {
 
   private products: ProductCard[];
 
-  constructor(products: ProductCard[]) {
+  constructor() {
     this.products = [];
 
     this.component = new Component({
       className: "products",
     });
-
-    this.setProducts(products);
   }
 
   setProducts(products: ProductCard[]) {

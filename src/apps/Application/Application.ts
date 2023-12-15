@@ -1,9 +1,11 @@
 import {
   AuthorizationWindow,
+  Button,
   ProductCard,
   ProductsWrapper,
   Spinner,
 } from "../../components";
+import { Pagination } from "../../components/Pagination/Pagination";
 import { render } from "../../core";
 import {
   Product,
@@ -23,6 +25,7 @@ export class Application {
   private spinner: Spinner;
   private authorizationWindow: AuthorizationWindow;
   private products: ProductsWrapper;
+  private pagination: Pagination;
 
   constructor() {
     this.app = document.getElementById("app");
@@ -36,15 +39,53 @@ export class Application {
 
     this.productController = new ProductController();
 
-    this.products = new ProductsWrapper(
-      this.productsToCards(this.productController.getAll())
-    );
+    this.products = new ProductsWrapper();
+
+    this.pagination = new Pagination(4);
   }
 
   productsToCards(products: Product[]) {
     return products.map(
       (product) => new ProductCard(product, this.getBuyEvents())
     );
+  }
+
+  setPagination(products: Product[]) {
+    const count = Math.ceil(products.length / this.pagination.getMaxCount());
+
+    const buttons: HTMLElement[] = [];
+
+    for (let i = 1; i <= count; i++) {
+      const btn = new Button({
+        textContent: i.toString(),
+        events: {
+          click: () => {
+            this.pagination.setCurrentPage(i);
+
+            buttons.forEach((button) => button.classList.remove("active"));
+            btn.classList.add("active");
+            
+            this.setDisplayedProducts(products);
+          },
+        },
+      }).getComponent();
+
+      buttons.push(btn);
+    }
+
+    render(this.pagination.getComponent(), buttons);
+  }
+
+  setDisplayedProducts(products: Product[]) {
+    const cards = this.productsToCards(
+      this.productController.getByPage(
+        this.pagination.getCurrentPage(),
+        this.pagination.getMaxCount(),
+        products
+      )
+    );
+
+    this.products.setProducts(cards);
   }
 
   getBuyEvents() {
@@ -70,7 +111,6 @@ export class Application {
 
           setTimeout(() => {
             // TODO: replace with showing the admin panel button in the header
-
             // this.launchApp();
           }, 2000);
         } else {
@@ -83,9 +123,12 @@ export class Application {
 
   launchApp() {
     // TODO: replace with adding header, main and footer
-    // TODO: main -> products
+    // TODO: main -> products + pagination + sort button
 
     render(this.app, this.products.getComponent());
+    this.app.append(this.pagination.getComponent());
+    this.setPagination(this.productController.getAll());
+    this.setDisplayedProducts(this.productController.getAll());
   }
 
   run() {
