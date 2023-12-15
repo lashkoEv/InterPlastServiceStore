@@ -10,7 +10,7 @@ export const getProducts = () => {
       1000,
       10,
       "man1",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0002",
@@ -20,7 +20,7 @@ export const getProducts = () => {
       2000,
       20,
       "man2",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0003",
@@ -30,7 +30,7 @@ export const getProducts = () => {
       300,
       30,
       "man3",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0004",
@@ -40,7 +40,7 @@ export const getProducts = () => {
       4000,
       40,
       "man4",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0005",
@@ -50,7 +50,7 @@ export const getProducts = () => {
       5000,
       50,
       "man5",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0006",
@@ -60,7 +60,7 @@ export const getProducts = () => {
       6000,
       60,
       "man6",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0007",
@@ -70,7 +70,7 @@ export const getProducts = () => {
       7000,
       70,
       "man7",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0008",
@@ -80,7 +80,7 @@ export const getProducts = () => {
       8000,
       80,
       "man8",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0009",
@@ -90,7 +90,7 @@ export const getProducts = () => {
       9000,
       90,
       "man9",
-      "#"
+      "public/images/image.png"
     ),
     new Product(
       "0010",
@@ -100,8 +100,9 @@ export const getProducts = () => {
       10000,
       100,
       "man10",
-      "#"
+      "public/images/image.png"
     ),
   ];
+  
   return products;
 };

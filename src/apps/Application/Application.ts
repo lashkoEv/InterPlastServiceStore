@@ -1,21 +1,55 @@
-import { AuthorizationWindow, Spinner } from "../../components";
+import {
+  AuthorizationWindow,
+  ProductCard,
+  ProductsWrapper,
+  Spinner,
+} from "../../components";
 import { render } from "../../core";
-import { UserType } from "../../enums/UserType";
-import { User, UserController } from "../../schemas";
+import {
+  Product,
+  ProductController,
+  User,
+  UserController,
+} from "../../schemas";
 
 export class Application {
+  private app: HTMLElement;
+
   private userController: UserController;
   private currentUser: User | undefined;
-  private app: HTMLElement;
+
+  private productController: ProductController;
+
   private spinner: Spinner;
   private authorizationWindow: AuthorizationWindow;
+  private products: ProductsWrapper;
 
   constructor() {
+    this.app = document.getElementById("app");
+
     this.userController = new UserController();
     this.currentUser = undefined;
-    this.app = document.getElementById("app");
+
     this.spinner = new Spinner();
+
     this.authorizationWindow = new AuthorizationWindow(this.getSendEvents());
+
+    this.productController = new ProductController();
+
+    this.products = new ProductsWrapper(
+      this.productsToCards(this.productController.getAll())
+    );
+  }
+
+  productsToCards(products: Product[]) {
+    return products.map(
+      (product) => new ProductCard(product, this.getBuyEvents())
+    );
+  }
+
+  getBuyEvents() {
+    // TODO: when the cart will be ready
+    return {};
   }
 
   getSendEvents() {
@@ -35,7 +69,9 @@ export class Application {
           console.log(this.currentUser);
 
           setTimeout(() => {
-            this.launchApp();
+            // TODO: replace with showing the admin panel button in the header
+
+            // this.launchApp();
           }, 2000);
         } else {
           this.authorizationWindow.error();
@@ -46,15 +82,21 @@ export class Application {
   }
 
   launchApp() {
-    console.log("app!");
+    // TODO: replace with adding header, main and footer
+    // TODO: main -> products
+
+    render(this.app, this.products.getComponent());
   }
 
   run() {
     render(this.app, this.spinner.getComponent());
 
     setTimeout(() => {
-      this.authorizationWindow.reset();
-      render(this.app, this.authorizationWindow.getComponent());
+      // TODO: onclick of auth button
+      // this.authorizationWindow.reset();
+      // render(this.app, this.authorizationWindow.getComponent());
+
+      this.launchApp();
     }, 2000);
   }
 }
