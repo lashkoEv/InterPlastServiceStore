@@ -1,6 +1,7 @@
 import { Product, ProductRepository } from "./schemas";
 
 import "./style.css";
+import { getProducts } from "./utils";
 
 const a = new Product();
 
@@ -30,6 +31,4 @@ products.addMany([a, b, c])
 // console.log(products.filterByPrice(products.products, 100));
 // console.log(products.filterByAvailability(products.products));
 console.log(products.filterByManufactorer(products.products, 'samsung'));
-
-
 
