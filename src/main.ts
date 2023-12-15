@@ -6,21 +6,21 @@ import { getProducts } from "./utils";
 const a = new Product();
 
 a.setTitle('smartphone');
-a.setPrice('100');
+a.setPrice(100);
 a.setAvailability(true);
 a.setManufacturer('samsung')
 
 const b = new Product();
 
 b.setTitle('laptop');
-b.setPrice('200');
+b.setPrice(200);
 b.setAvailability(false);
 b.setManufacturer('samsung')
 
 const c = new Product();
 
 c.setTitle('comp');
-c.setPrice('500');
+c.setPrice(500);
 c.setAvailability(true);
 c.setManufacturer('hp')
 

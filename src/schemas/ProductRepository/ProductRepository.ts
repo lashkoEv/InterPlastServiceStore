@@ -98,7 +98,7 @@ export class ProductRepository implements IRepository<Product> {
 
   filterByPrice(products: Product[], HighestPrice: number){
     return products.filter((el)=>{
-      const productPrice = +el.getPrice();
+      const productPrice = el.getPrice();
       
       if(productPrice <= HighestPrice){
         return true;
