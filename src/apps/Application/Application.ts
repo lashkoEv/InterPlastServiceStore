@@ -31,19 +31,22 @@ export class Application {
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
 
-          setTimeout(() => {
-            this.spinner.getComponent().remove();
-            console.log("succes authorization");
-            console.log(this.currentUser);
+          console.log("success authorization");
+          console.log(this.currentUser);
 
-            render(this.app, this.authorizationWindow.getComponent());
+          setTimeout(() => {
+            this.launchApp();
           }, 2000);
         } else {
           this.authorizationWindow.error();
-          console.log("wrong email or password");
+          console.error("wrong email or password");
         }
       },
     };
+  }
+
+  launchApp() {
+    console.log("app!");
   }
 
   run() {
@@ -53,11 +56,5 @@ export class Application {
       this.authorizationWindow.reset();
       render(this.app, this.authorizationWindow.getComponent());
     }, 2000);
-
-    setTimeout(() => {
-      if (this.currentUser?.getUserType() === UserType.Admin) {
-        this.run();
-      }
-    }, 50000);
   }
 }
