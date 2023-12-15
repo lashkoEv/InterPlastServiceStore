@@ -23,7 +23,7 @@ export class ProductController {
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -46,7 +46,7 @@ export class ProductController {
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -63,5 +63,21 @@ export class ProductController {
         imageURL
       )
     );
+  }
+
+  search(search: string) {
+    this.productRepository.search(search);
+  }
+
+  sortByTitle(asc: boolean, products: Product[]) {
+    this.productRepository.sortByTitle(asc, products);
+  }
+
+  sortByPrice(asc: boolean, products: Product[]) {
+    this.productRepository.sortByPrice(asc, products);
+  }
+
+  sortByAvailability(asc: boolean, products: Product[]) {
+    this.productRepository.sortByAvailability(asc, products);
   }
 }

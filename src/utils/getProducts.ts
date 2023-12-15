@@ -7,7 +7,7 @@ export const getProducts = () => {
       "product1",
       true,
       "description1",
-      "1000",
+      1000,
       10,
       "man1",
       "#"
@@ -17,7 +17,7 @@ export const getProducts = () => {
       "product2",
       true,
       "description2",
-      "2000",
+      2000,
       20,
       "man2",
       "#"
@@ -25,9 +25,9 @@ export const getProducts = () => {
     new Product(
       "0003",
       "product3",
-      true,
+      false,
       "description3",
-      "3000",
+      300,
       30,
       "man3",
       "#"
@@ -37,7 +37,7 @@ export const getProducts = () => {
       "product4",
       true,
       "description4",
-      "4000",
+      4000,
       40,
       "man4",
       "#"
@@ -47,7 +47,7 @@ export const getProducts = () => {
       "product5",
       true,
       "description5",
-      "5000",
+      5000,
       50,
       "man5",
       "#"
@@ -57,7 +57,7 @@ export const getProducts = () => {
       "product6",
       true,
       "description6",
-      "6000",
+      6000,
       60,
       "man6",
       "#"
@@ -67,7 +67,7 @@ export const getProducts = () => {
       "product7",
       true,
       "description7",
-      "7000",
+      7000,
       70,
       "man7",
       "#"
@@ -77,7 +77,7 @@ export const getProducts = () => {
       "product8",
       true,
       "description8",
-      "8000",
+      8000,
       80,
       "man8",
       "#"
@@ -87,7 +87,7 @@ export const getProducts = () => {
       "product9",
       true,
       "description9",
-      "9000",
+      9000,
       90,
       "man9",
       "#"
@@ -97,7 +97,7 @@ export const getProducts = () => {
       "product10",
       true,
       "description10",
-      "10000",
+      10000,
       100,
       "man10",
       "#"
