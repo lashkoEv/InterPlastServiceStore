@@ -8,6 +8,8 @@ export class ProductRepository implements IRepository<Product> {
     this.products = [];
   }
 
+  //   * --- basic logic (Misha)
+
   getAll(): Product[] {
     return this.products;
   }
@@ -54,11 +56,15 @@ export class ProductRepository implements IRepository<Product> {
     return this.products[this.products.length - 1];
   }
 
+  //   * --- search (Yevheniia)
+
   search(search: string) {
     return this.products.filter((product) =>
       product.getTitle().toLowerCase().includes(search.toLowerCase())
     );
   }
+
+  //   * --- sorting (Yevheniia)
 
   sortByTitleAsc(products: Product[]) {
     return products.sort((a, b) => {
@@ -130,6 +136,8 @@ export class ProductRepository implements IRepository<Product> {
     });
   }
 
+  //   * --- pagination (Yevheniia)
+
   getByPage(page: number, amount: number, products: Product[]): Product[] {
     const start = (page - 1) * amount;
     let end = page * amount;
@@ -143,5 +151,37 @@ export class ProductRepository implements IRepository<Product> {
     }
 
     return byPage;
+  }
+
+  //   * --- filters (Ruslan)
+
+  filterByPrice(products: Product[], HighestPrice: number) {
+    return products.filter((el) => {
+      const productPrice = el.getPrice();
+
+      if (productPrice <= HighestPrice) {
+        return true;
+      }
+    });
+  }
+
+  filterByAvailability(products: Product[]) {
+    return products.filter((el) => {
+      const productAvailability = el.getAvailability();
+
+      if (productAvailability) {
+        return true;
+      }
+    });
+  }
+
+  filterByManufactorer(products: Product[], manufacturer: string) {
+    return products.filter((el) => {
+      const productManufactorer = el.getManufacturer();
+
+      if (productManufactorer === manufacturer) {
+        return true;
+      }
+    });
   }
 }
