@@ -108,8 +108,19 @@ export class ProductRepository implements IRepository<Product> {
 
   filterByAvailability(products: Product[]){
     return products.filter((el)=>{
+      const productAvailability = el.getAvailability();
+
+      if(productAvailability){
+        return true;
+      }      
+    })
+  }
+
+  filterByManufactorer(products: Product[], manufacturer: string){
+    return products.filter((el)=>{
+      const productManufactorer = el.getManufacturer();
       
-      if(el.getAvailability()){
+      if(productManufactorer === manufacturer){
         return true;
       }      
     })
