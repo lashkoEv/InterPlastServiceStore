@@ -9,22 +9,21 @@ export class ProductController {
 
     this.init();
   }
-
   private init() {
-    this.productRepository.save(getProducts());
-    this.productRepository.load();
-  }
+    // this.productRepository.save(getProducts());
+    // this.productRepository.load();
 
+    this.productRepository.addMany(getProducts());
+  }
   getAll() {
     return this.productRepository.getAll();
   }
-
   update(
     product: Product,
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -40,16 +39,14 @@ export class ProductController {
       imageURL
     );
   }
-
   delete(product: Product) {
     this.productRepository.delete(product);
   }
-  
   add(
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -66,5 +63,27 @@ export class ProductController {
         imageURL
       )
     );
+  }
+
+  search(search: string) {
+    return this.productRepository.search(search);
+  }
+
+  sortByTitle(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByTitleAsc(products)
+      : this.productRepository.sortByTitleDesc(products);
+  }
+
+  sortByPrice(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByPriceAsc(products)
+      : this.productRepository.sortByPriceDesc(products);
+  }
+
+  sortByAvailability(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByAvailabilityAsc(products)
+      : this.productRepository.sortByAvailabilityDesc(products);
   }
 }

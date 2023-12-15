@@ -94,3 +94,42 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.modal > .success {
+  border-bottom: 1px solid rgb(19, 136, 4);
+}
+
+.modal > .error {
+  border: none;
+  border-bottom: 1px solid rgb(197, 4, 4);
+}
+.spinner {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 48%;
+  left: 50%;
+}
+
+.spinner:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid rgb(104, 50, 204);
+  border-color: #fff transparent rgb(104, 50, 204) transparent;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
