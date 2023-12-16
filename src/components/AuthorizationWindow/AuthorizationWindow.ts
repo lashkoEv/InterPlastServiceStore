@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { Button, Input } from '..';
 import { Component } from '../../core';
 import { IComponent, IWindow } from '../../interfaces';
+=======
+import { Button, Input } from "..";
+import { Component } from "../../core";
+import { IComponent, IWindow } from "../../interfaces";
+>>>>>>> dev
 
 export class AuthorizationWindow implements IComponent, IWindow {
   private component: Component;
@@ -11,12 +17,17 @@ export class AuthorizationWindow implements IComponent, IWindow {
   constructor(sendEvents: {}) {
     this.emailInput = new Input({
       attrs: {
+<<<<<<< HEAD
         placeholder: 'Login',
+=======
+        placeholder: "Login",
+>>>>>>> dev
       },
     });
 
     this.passwordInput = new Input({
       attrs: {
+<<<<<<< HEAD
         placeholder: 'Password',
         type: 'password',
       },
@@ -26,6 +37,17 @@ export class AuthorizationWindow implements IComponent, IWindow {
 
     this.component = new Component({
       className: 'modal',
+=======
+        placeholder: "Password",
+        type: "password",
+      },
+    });
+
+    this.sendBtn = new Button({ textContent: "Send", events: sendEvents });
+
+    this.component = new Component({
+      className: "modal",
+>>>>>>> dev
       children: [
         this.getEmailInput(),
         this.getPasswordInput(),
@@ -35,7 +57,11 @@ export class AuthorizationWindow implements IComponent, IWindow {
   }
 
   changeVisibility(): void {
+<<<<<<< HEAD
     this.getComponent().classList.toggle('hide');
+=======
+    this.getComponent().classList.toggle("hide");
+>>>>>>> dev
   }
 
   getComponent(): HTMLElement | HTMLInputElement {
@@ -55,6 +81,7 @@ export class AuthorizationWindow implements IComponent, IWindow {
   }
 
   success() {
+<<<<<<< HEAD
     this.getEmailInput().className = 'input success';
     this.getPasswordInput().className = 'input success';
   }
@@ -69,5 +96,21 @@ export class AuthorizationWindow implements IComponent, IWindow {
 
     this.getEmailInput().className = 'input';
     this.getPasswordInput().className = 'input';
+=======
+    this.getEmailInput().className = "input success";
+    this.getPasswordInput().className = "input success";
+  }
+
+  error() {
+    this.getEmailInput().classList.add("error");
+    this.getPasswordInput().classList.add("error");
+  }
+  reset() {
+    this.getEmailInput().value = "";
+    this.getPasswordInput().value = "";
+
+    this.getEmailInput().className = "input";
+    this.getPasswordInput().className = "input";
+>>>>>>> dev
   }
 }
