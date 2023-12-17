@@ -46,7 +46,8 @@ export class Application {
 
   productsToCards(products: Product[]) {
     return products.map(
-      (product) => new ProductCard(product, this.getBuyEvents())
+      (product) =>
+        new ProductCard(product, this.getBuyEvents(), this.getShowEvents())
     );
   }
 
@@ -74,7 +75,7 @@ export class Application {
     }
 
     buttons[0].classList.add("active");
-    
+
     render(this.pagination.getComponent(), buttons);
   }
 
@@ -92,7 +93,22 @@ export class Application {
 
   getBuyEvents() {
     // TODO: when the cart will be ready
-    return {};
+    return {
+      click: () => {
+        console.log("add product to the cart");
+      },
+    };
+  }
+
+  getShowEvents() {
+    return {
+      dblclick: (e) => {
+        // TODO: create modal window of product
+        if (e.target.tagName !== "BUTTON") {
+          console.log("show modal window: all info about product");
+        }
+      },
+    };
   }
 
   getSendEvents() {
@@ -113,7 +129,7 @@ export class Application {
 
           setTimeout(() => {
             // TODO: replace with showing the admin panel button in the header
-            // this.launchApp();
+            this.launchApp();
           }, 2000);
         } else {
           this.authorizationWindow.error();
