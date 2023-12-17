@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { UserType } from '../../enums/UserType';
 import { IUser } from '../../interfaces';
-=======
-import { UserType } from "../../enums/UserType";
-import { IUser } from "../../interfaces";
->>>>>>> dev
 
 export class User implements IUser {
   constructor(

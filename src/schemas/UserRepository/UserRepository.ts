@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 import { User } from '..';
-import { UserType } from '../../enums';
 import { IRepository } from '../../interfaces';
-=======
-import { User } from "..";
-import { IRepository } from "../../interfaces";
->>>>>>> dev
 
 export class UserRepository implements IRepository<User> {
   private users: User[];
@@ -14,31 +8,6 @@ export class UserRepository implements IRepository<User> {
     this.users = [];
   }
 
-<<<<<<< HEAD
-  save(users: User[] | null): void {
-    if (users) {
-      users.forEach((user) => {
-        localStorage.setItem(user.getId(), JSON.stringify(user));
-      });
-    }
-
-    this.users.forEach((user) => {
-      localStorage.setItem(user.getId(), JSON.stringify(user));
-    });
-  }
-
-  load(): void {
-    for (const key in localStorage) {
-      if (key.includes('user')) {
-        const user = JSON.parse(localStorage.getItem(key));
-
-        this.add(new User(user.id, user.login, user.password, user.userType));
-      }
-    }
-  }
-
-=======
->>>>>>> dev
   getAll(): User[] {
     return this.users;
   }
@@ -51,15 +20,13 @@ export class UserRepository implements IRepository<User> {
     users.forEach((user) => this.users.push(user));
   }
 
-<<<<<<< HEAD
-=======
   remove(user: User): void {
     const remove = this.users.findIndex((u) => u === user);
     if (remove !== -1) {
       this.users.splice(remove, 1);
     }
   }
-  
+
   update(updatedUser: User): void {
     const update = this.users.findIndex(
       (user) => user.getId() === updatedUser.getId()
@@ -69,7 +36,6 @@ export class UserRepository implements IRepository<User> {
     }
   }
 
->>>>>>> dev
   getByLoginAndPassword(login: string, password: string) {
     return this.users.find(
       (user) => user.getLogin() === login && user.getPassword() === password
@@ -78,13 +44,8 @@ export class UserRepository implements IRepository<User> {
 
   isEmailValid(email: string) {
     if (
-<<<<<<< HEAD
       email.includes('@') &&
       email.indexOf('.') > email.indexOf('@') &&
-=======
-      email.includes("@") &&
-      email.indexOf(".") > email.indexOf("@") &&
->>>>>>> dev
       email.length >= 5
     ) {
       return email;

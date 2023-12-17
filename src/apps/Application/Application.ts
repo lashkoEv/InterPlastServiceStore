@@ -4,6 +4,7 @@ import {
   ProductCard,
   ProductsWrapper,
   Spinner,
+  Main,
 } from '../../components';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { render } from '../../core';
@@ -19,7 +20,7 @@ export class Application {
 
   private userController: UserController;
   private currentUser: User | undefined;
-
+  private main: Main;
   private productController: ProductController;
 
   private spinner: Spinner;
@@ -42,6 +43,9 @@ export class Application {
     this.products = new ProductsWrapper();
 
     this.pagination = new Pagination(8);
+    this.main = new Main({
+      children: [this.products.getComponent(), this.pagination.getComponent()],
+    });
   }
 
   productsToCards(products: Product[]) {
@@ -127,8 +131,10 @@ export class Application {
     // TODO: replace with adding header, main and footer
     // TODO: main -> products + pagination + sort button
 
-    render(this.app, this.products.getComponent());
-    this.app.append(this.pagination.getComponent());
+    render(this.app, this.main.getComponent());
+
+    // this.app.append(this.pagination.getComponent());
+
     this.setPagination(this.productController.getAll());
     this.setDisplayedProducts(this.productController.getAll());
   }

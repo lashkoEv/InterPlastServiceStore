@@ -12,8 +12,8 @@ export class UserController {
   }
 
   init() {
-    this.userRepository.save(getUsers());
-    this.userRepository.load();
+    // this.userRepository.save(getUsers());
+    // this.userRepository.load();
   }
 
   authorize(email: string, password: string) {

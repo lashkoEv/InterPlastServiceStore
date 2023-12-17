@@ -1,11 +1,11 @@
-import { append } from ".";
-import { IComponent, IHtmlData } from "../interfaces";
+import { append } from '.';
+import { IComponent, IHtmlData } from '../interfaces';
 
 export class Component implements IComponent {
   private component: HTMLElement;
 
   constructor({
-    tagName = "div",
+    tagName = 'div',
     className,
     children,
     textContent,
