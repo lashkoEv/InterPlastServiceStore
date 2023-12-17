@@ -1,38 +1,18 @@
-<<<<<<< HEAD
-import { AuthorizationWindow, Spinner } from '../../components';
-import { Component, render } from '../../core';
-import { UserType } from '../../enums/UserType';
-import { User, UserController } from '../../schemas';
-
-export class Application {
-  private userController: UserController;
-  private currentUser: User | undefined;
-  private app: HTMLElement;
-  private spinner: Spinner;
-  private authorizationWindow: AuthorizationWindow;
-
-  constructor() {
-    this.userController = new UserController();
-    this.currentUser = undefined;
-    this.app = document.getElementById('app');
-    this.spinner = new Spinner();
-    this.authorizationWindow = new AuthorizationWindow(this.getSendEvents());
-=======
 import {
   AuthorizationWindow,
   Button,
   ProductCard,
   ProductsWrapper,
   Spinner,
-} from "../../components";
-import { Pagination } from "../../components/Pagination/Pagination";
-import { render } from "../../core";
+} from '../../components';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { render } from '../../core';
 import {
   Product,
   ProductController,
   User,
   UserController,
-} from "../../schemas";
+} from '../../schemas';
 
 export class Application {
   private app: HTMLElement;
@@ -48,7 +28,7 @@ export class Application {
   private pagination: Pagination;
 
   constructor() {
-    this.app = document.getElementById("app");
+    this.app = document.getElementById('app');
 
     this.userController = new UserController();
     this.currentUser = undefined;
@@ -82,8 +62,8 @@ export class Application {
           click: () => {
             this.pagination.setCurrentPage(i);
 
-            buttons.forEach((button) => button.classList.remove("active"));
-            btn.classList.add("active");
+            buttons.forEach((button) => button.classList.remove('active'));
+            btn.classList.add('active');
 
             this.setDisplayedProducts(products);
           },
@@ -93,8 +73,8 @@ export class Application {
       buttons.push(btn);
     }
 
-    buttons[0].classList.add("active");
-    
+    buttons[0].classList.add('active');
+
     render(this.pagination.getComponent(), buttons);
   }
 
@@ -113,7 +93,6 @@ export class Application {
   getBuyEvents() {
     // TODO: when the cart will be ready
     return {};
->>>>>>> dev
   }
 
   getSendEvents() {
@@ -129,19 +108,7 @@ export class Application {
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
 
-<<<<<<< HEAD
-          setTimeout(() => {
-            this.spinner.getComponent().remove();
-            console.log('succes authorization');
-            console.log(this.currentUser);
-
-            render(this.app, this.authorizationWindow.getComponent());
-          }, 2000);
-        } else {
-          this.authorizationWindow.error();
-          console.log('wrong email or password');
-=======
-          console.log("success authorization");
+          console.log('success authorization');
           console.log(this.currentUser);
 
           setTimeout(() => {
@@ -150,15 +117,12 @@ export class Application {
           }, 2000);
         } else {
           this.authorizationWindow.error();
-          console.error("wrong email or password");
->>>>>>> dev
+          console.error('wrong email or password');
         }
       },
     };
   }
 
-<<<<<<< HEAD
-=======
   launchApp() {
     // TODO: replace with adding header, main and footer
     // TODO: main -> products + pagination + sort button
@@ -169,28 +133,15 @@ export class Application {
     this.setDisplayedProducts(this.productController.getAll());
   }
 
->>>>>>> dev
   run() {
     render(this.app, this.spinner.getComponent());
 
     setTimeout(() => {
-<<<<<<< HEAD
-      this.authorizationWindow.reset();
-      render(this.app, this.authorizationWindow.getComponent());
-    }, 2000);
-
-    setTimeout(() => {
-      if (this.currentUser?.getUserType() === UserType.Admin) {
-        this.run();
-      }
-    }, 50000);
-=======
       // TODO: onclick of auth button
       // this.authorizationWindow.reset();
       // render(this.app, this.authorizationWindow.getComponent());
 
       this.launchApp();
     }, 2000);
->>>>>>> dev
   }
 }
