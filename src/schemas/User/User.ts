@@ -1,10 +1,7 @@
-import { UserType } from "../../enums";
+import { UserType } from "../../enums/UserType";
 import { IUser } from "../../interfaces";
 
 export class User implements IUser {
-  getComponent() {
-    throw new Error("Method not implemented.");
-  }
   constructor(
     private id: string,
     private login: string,

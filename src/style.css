@@ -94,3 +94,42 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.modal {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 48%;
+  left: 50%;
+  background-color: rgb(56, 56, 56);
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 3rem;
+}
+
+.modal > .input {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid rgb(107, 107, 107);
+  background-color: transparent;
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
+}
+
+.modal > .success {
+  border-bottom: 1px solid rgb(19, 136, 4);
+}
+
+.modal > .error {
+  border: none;
+  border-bottom: 1px solid rgb(197, 4, 4);
+}

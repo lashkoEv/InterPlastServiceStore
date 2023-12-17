@@ -1,3 +1,6 @@
-import { Component } from "./core";
-import { User } from "./schemas";
+import { Application } from "./apps";
 import "./style.css";
+
+const application = new Application();
+
+application.run();
