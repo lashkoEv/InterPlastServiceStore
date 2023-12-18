@@ -145,7 +145,13 @@ export class Application {
   }
 
   getSearchBtnEvents() {
-    return {};
+    return {
+      click: () => {
+        this.setDisplayedProducts(
+          this.productController.search(this.header.getSearchInput().value)
+        );
+      },
+    };
   }
   getAdminPanelBtnEvents() {
     return {};
