@@ -8,6 +8,7 @@ export class UserRepository implements IRepository<User> {
   constructor() {
     this.users = [
       new User('user0', 'admin@gmail.com', 'admin232', UserType.Admin),
+      new User('user1', 'guest@gmail.com', 'guest232', UserType.Guest),
     ];
   }
 
@@ -66,6 +67,6 @@ export class UserRepository implements IRepository<User> {
   }
 
   validateEmailAndPassword(email: string, password: string) {
-    return this.getByLoginAndPassword(email, password) ? email : false;
+    return this.getByLoginAndPassword(email, password);
   }
 }

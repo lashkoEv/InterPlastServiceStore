@@ -121,11 +121,15 @@ export class Application {
           render(this.app, this.spinner.getComponent());
 
           console.log(this.currentUser);
-          if (this.currentUser) {
+          if (this.currentUser.getUserType() === UserType.Admin) {
             console.log('admin');
             setTimeout(() => {
-              // TODO: replace with showing the admin panel button in the header
               this.header.changeVisibility();
+              this.launchApp();
+            }, 2000);
+          } else if (this.currentUser.getUserType() !== UserType.Admin) {
+            console.log('guest');
+            setTimeout(() => {
               this.launchApp();
             }, 2000);
           }
