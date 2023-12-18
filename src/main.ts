@@ -1,7 +1,6 @@
 import { Product, ProductRepository } from "./schemas";
 
 import "./style.css";
-import { getProducts } from "./utils";
 
 const a = new Product();
 
