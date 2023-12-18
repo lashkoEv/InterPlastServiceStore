@@ -86,4 +86,8 @@ export class ProductController {
       ? this.productRepository.sortByAvailabilityAsc(products)
       : this.productRepository.sortByAvailabilityDesc(products);
   }
+
+  getByPage(page: number, amount: number, products: Product[]) {
+    return this.productRepository.getByPage(page, amount, products);
+  }
 }
