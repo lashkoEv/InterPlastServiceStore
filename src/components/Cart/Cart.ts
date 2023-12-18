@@ -6,17 +6,17 @@ import { Product } from "../../schemas";
 export class Cart implements IComponent {
   private component: Component;
 
-  constructor(product: Cart, cardEvents: {}) {
+  constructor(product: Product, cardEvents: {}) {
     const img = new Component({
       tagName: "img",
       className: "image",
       attrs: {
-        src: product.getImageUrl(),
+        src: product.getImageURL(),
       },
     }).getComponent();
 
     const description = new Button({
-      tagName: "p",
+      tagName: "button",
       className: "description",
       textContent: product.getDescription(),
     }).getComponent();
@@ -27,30 +27,23 @@ export class Cart implements IComponent {
       textContent: product.getDescription(),
     }).getComponent();
 
-    const increase = new Component({
-      tagName: "p",
-      className: "price",
-      textContent: product.getPrice(),
+    const increase = new Button({
+      tagName: "button",
+      className: "increase",
     }).getComponent();
 
     const price = new Component({
-      tagName: "img",
-      className: "image",
-      attrs: {
-        src: product.getImageUrl(),
-      },
+      tagName: "p",
+      className: "price",
     }).getComponent();
 
-    const deletebtn = new Component({
-      tagName: "img",
-      className: "image",
-      attrs: {
-        src: product.getImageUrl(),
-      },
+    const deletebtn = new Button({
+      tagName: "button",
+      className: "deletebtn",
     }).getComponent();
 
     this.component = new Component({
-      className: "product",
+      className: "cart",
       children: [img, description, count, increase, price, deletebtn],
       events: cardEvents,
     });
