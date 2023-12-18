@@ -10,8 +10,10 @@ export class ProductController {
     this.init();
   }
   private init() {
-    this.productRepository.save(getProducts());
-    this.productRepository.load();
+    // this.productRepository.save(getProducts());
+    // this.productRepository.load();
+
+    this.productRepository.addMany(getProducts());
   }
   getAll() {
     return this.productRepository.getAll();
@@ -21,7 +23,7 @@ export class ProductController {
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -61,5 +63,31 @@ export class ProductController {
         imageURL
       )
     );
+  }
+
+  search(search: string) {
+    return this.productRepository.search(search);
+  }
+
+  sortByTitle(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByTitleAsc(products)
+      : this.productRepository.sortByTitleDesc(products);
+  }
+
+  sortByPrice(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByPriceAsc(products)
+      : this.productRepository.sortByPriceDesc(products);
+  }
+
+  sortByAvailability(asc: boolean, products: Product[]) {
+    return asc
+      ? this.productRepository.sortByAvailabilityAsc(products)
+      : this.productRepository.sortByAvailabilityDesc(products);
+  }
+
+  getByPage(page: number, amount: number, products: Product[]) {
+    return this.productRepository.getByPage(page, amount, products);
   }
 }

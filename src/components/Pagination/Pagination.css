@@ -1,0 +1,11 @@
+.active {
+    background-color: rgb(57, 48, 136);
+}
+
+.pagination {
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}

@@ -8,6 +8,8 @@ export class ProductRepository implements IRepository<Product> {
     this.products = [];
   }
 
+  //   * --- basic logic (Misha)
+
   getAll(): Product[] {
     return this.products;
   }
@@ -25,7 +27,7 @@ export class ProductRepository implements IRepository<Product> {
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -50,46 +52,136 @@ export class ProductRepository implements IRepository<Product> {
     }
   }
 
-  save(products: Product[] | null): void {
-    if (products) {
-      products.forEach((product) => {
-        localStorage.setItem(
-          product.getID().toString(),
-          JSON.stringify(product)
-        );
-      });
-    }
+  getLast() {
+    return this.products[this.products.length - 1];
+  }
 
-    this.products.forEach((product) => {
-      localStorage.setItem(product.getID().toString(), JSON.stringify(product));
+  //   * --- search (Yevheniia)
+
+  search(search: string) {
+    return this.products.filter((product) =>
+      product.getTitle().toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  //   * --- sorting (Yevheniia)
+
+  sortByTitleAsc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
+
+      if (a.getTitle().toLowerCase() < b.getTitle().toLowerCase()) {
+        return -1;
+      } else {
+        return 1;
+      }
     });
   }
 
-  load(): void {
-    for (const key in localStorage) {
-      if (key.includes("product")) {
-        const productData = localStorage.getItem(key);
+  sortByTitleDesc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
 
-        if (productData !== null) {
-          const parsedProduct = JSON.parse(productData);
-
-          this.add(
-            new Product(
-              parsedProduct.id,
-              parsedProduct.title,
-              parsedProduct.isAvailable,
-              parsedProduct.description,
-              parsedProduct.price,
-              parsedProduct.quantity,
-              parsedProduct.manufacturer,
-              parsedProduct.imageURL
-            )
-          );
-        }
+      if (a.getTitle().toLowerCase() > b.getTitle().toLowerCase()) {
+        return -1;
+      } else {
+        return 1;
       }
-    }
+    });
   }
-  getLast() {
-    return this.products[this.products.length - 1];
+
+  sortByPriceAsc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getPrice() === b.getPrice()) return 0;
+
+      if (a.getPrice() < b.getPrice()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  sortByPriceDesc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getPrice() === b.getPrice()) return 0;
+
+      if (a.getPrice() > b.getPrice()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  sortByAvailabilityAsc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getAvailability() === b.getAvailability()) return 0;
+
+      if (a.getAvailability() > b.getAvailability()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  sortByAvailabilityDesc(products: Product[]) {
+    return products.sort((a, b) => {
+      if (a.getAvailability() < b.getAvailability()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  //   * --- pagination (Yevheniia)
+
+  getByPage(page: number, amount: number, products: Product[]): Product[] {
+    const start = (page - 1) * amount;
+    let end = page * amount;
+
+    if (end > products.length - 1) end = products.length;
+
+    const byPage = products.slice(start, end);
+
+    if (byPage.length === 0) {
+      return this.getByPage(page - 1, amount, products);
+    }
+
+    return byPage;
+  }
+
+  //   * --- filters (Ruslan)
+
+  filterByPrice(products: Product[], HighestPrice: number) {
+    return products.filter((el) => {
+      const productPrice = el.getPrice();
+
+      if (productPrice <= HighestPrice) {
+        return true;
+      }
+    });
+  }
+
+  filterByAvailability(products: Product[]) {
+    return products.filter((el) => {
+      const productAvailability = el.getAvailability();
+
+      if (productAvailability) {
+        return true;
+      }
+    });
+  }
+
+  filterByManufactorer(products: Product[], manufacturer: string) {
+    return products.filter((el) => {
+      const productManufactorer = el.getManufacturer();
+
+      if (productManufactorer === manufacturer) {
+        return true;
+      }
+    });
   }
 }
