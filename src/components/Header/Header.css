@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+  height: 70px;
+}
+
+.search__btn {
+  position: relative;
+  left: -5rem;
+}
+
+.hide {
+  display: none;
+}

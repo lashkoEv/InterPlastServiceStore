@@ -5,9 +5,11 @@ import {
   ProductsWrapper,
   Spinner,
   Main,
+  Header,
 } from '../../components';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { render } from '../../core';
+import { UserType } from '../../enums';
 import {
   Product,
   ProductController,
@@ -22,7 +24,7 @@ export class Application {
   private currentUser: User | undefined;
   private main: Main;
   private productController: ProductController;
-
+  private header: Header;
   private spinner: Spinner;
   private authorizationWindow: AuthorizationWindow;
   private products: ProductsWrapper;
@@ -43,6 +45,12 @@ export class Application {
     this.products = new ProductsWrapper();
 
     this.pagination = new Pagination(8);
+    this.header = new Header(
+      this.getSearchBtnEvents(),
+      this.getAdminPanelBtnEvents(),
+      this.getLoginBtnEvents(),
+      this.getCartBtnEvents()
+    );
     this.main = new Main({
       children: [this.products.getComponent(), this.pagination.getComponent()],
     });
@@ -112,13 +120,15 @@ export class Application {
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
 
-          console.log('success authorization');
           console.log(this.currentUser);
-
-          setTimeout(() => {
-            // TODO: replace with showing the admin panel button in the header
-            // this.launchApp();
-          }, 2000);
+          if (this.currentUser) {
+            console.log('admin');
+            setTimeout(() => {
+              // TODO: replace with showing the admin panel button in the header
+              this.header.changeVisibility();
+              this.launchApp();
+            }, 2000);
+          }
         } else {
           this.authorizationWindow.error();
           console.error('wrong email or password');
@@ -127,11 +137,33 @@ export class Application {
     };
   }
 
+  getSearchBtnEvents() {
+    return {};
+  }
+  getAdminPanelBtnEvents() {
+    return {};
+  }
+  getCartBtnEvents() {
+    return {};
+  }
+  getLoginBtnEvents() {
+    return {
+      click: () => {
+        render(this.app, this.spinner.getComponent());
+
+        setTimeout(() => {
+          this.authorizationWindow.reset();
+          render(this.app, this.authorizationWindow.getComponent());
+        }, 2000);
+      },
+    };
+  }
+
   launchApp() {
     // TODO: replace with adding header, main and footer
     // TODO: main -> products + pagination + sort button
 
-    render(this.app, this.main.getComponent());
+    render(this.app, [this.header.getComponent(), this.main.getComponent()]);
 
     // this.app.append(this.pagination.getComponent());
 
@@ -144,8 +176,6 @@ export class Application {
 
     setTimeout(() => {
       // TODO: onclick of auth button
-      // this.authorizationWindow.reset();
-      // render(this.app, this.authorizationWindow.getComponent());
 
       this.launchApp();
     }, 2000);

@@ -1,11 +1,14 @@
 import { User } from '..';
+import { UserType } from '../../enums';
 import { IRepository } from '../../interfaces';
 
 export class UserRepository implements IRepository<User> {
   private users: User[];
 
   constructor() {
-    this.users = [];
+    this.users = [
+      new User('user0', 'admin@gmail.com', 'admin232', UserType.Admin),
+    ];
   }
 
   getAll(): User[] {
