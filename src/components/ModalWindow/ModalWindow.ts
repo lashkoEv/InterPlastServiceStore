@@ -1,61 +1,81 @@
-import { Button, Input } from "..";
+import { Button } from "..";
 import { Component } from "../../core";
 import { IComponent, IWindow } from "../../interfaces";
+import { Product } from "../../schemas";
+
+import "./ModalWindow.css";
 
 export class ModalWindow implements IComponent, IWindow {
   private component: Component;
 
-  private titleInput: Input;
-  private descriptionInput: Input;
-  private priceInput: Input;
-  private urlInput: Input;
-  private applyBtn: Button;
-  private deleteBtn: Button;
+  private idComponent: Component;
+  private titleComponent: Component;
+  private isAvailableComponent: Component;
+  private descriptionComponent: Component;
+  private priceComponent: Component;
+  private quantityComponent: Component;
+  private manufacturerComponent: Component;
+  private imageURLComponent: Component;
+  private buyButton: Button;
+  private closeButton: Button;
 
-  constructor(applyEvents: {}, deleteEvents: {}) {
-    this.titleInput = new Input({
-      attrs: {
-        placeholder: "Title",
-      },
+  constructor(product: Product, buyEvents: {}, closeEvents: {}) {
+    this.idComponent = new Component({
+      className: "id",
+      textContent: product.getID(),
     });
-
-    this.descriptionInput = new Input({
-      attrs: {
-        placeholder: "Description",
-      },
+    this.titleComponent = new Component({
+      className: "title",
+      textContent: product.getTitle(),
     });
-
-    this.priceInput = new Input({
-      attrs: {
-        placeholder: "Price",
-      },
+    this.isAvailableComponent = new Component({
+      className: "isAvailable",
+      textContent: product.getAvailability()
+        ? "Product is available"
+        : "Product is unavailable",
     });
-
-    this.urlInput = new Input({
-      attrs: {
-        placeholder: "Image URL",
-      },
+    this.descriptionComponent = new Component({
+      className: "description",
+      textContent: product.getDescription(),
     });
-
-    this.applyBtn = new Button({
-      textContent: "Apply",
-      events: applyEvents,
+    this.priceComponent = new Component({
+      className: "price",
+      textContent: product.getPrice().toString(),
     });
-
-    this.deleteBtn = new Button({
-      textContent: "Delete",
-      events: deleteEvents,
+    this.quantityComponent = new Component({
+      className: "quantity",
+      textContent: product.getQuantity().toString(),
+    });
+    this.manufacturerComponent = new Component({
+      className: "manufacturer",
+      textContent: product.getManufacturer(),
+    });
+    this.imageURLComponent = new Component({
+      className: "imageURL",
+      textContent: product.getImageURL(),
+    });
+    this.buyButton = new Button({
+      textContent: "Buy",
+      events: buyEvents,
+    });
+    this.closeButton = new Button({
+      textContent: "❌",
+      events: closeEvents,
     });
 
     this.component = new Component({
       className: "modal hide",
       children: [
-        this.getTitleInput(),
-        this.getDescriptionInput(),
-        this.getPriceInput(),
-        this.getUrlInput(),
-        this.getApplyBtn(),
-        this.getDeleteBtn(),
+        this.getIDComponent(),
+        this.getTitleComponent(),
+        this.getAvailabilityComponent(),
+        this.getDescriptionComponent(),
+        this.getPriceComponent(),
+        this.getQuantityComponent(),
+        this.getManufacturerComponent(),
+        this.getImageURLComponent(),
+        this.getBuyButton(),
+        this.getCloseButton(),
       ],
     });
   }
@@ -68,27 +88,43 @@ export class ModalWindow implements IComponent, IWindow {
     this.getComponent().classList.toggle("hide");
   }
 
-  getTitleInput(): HTMLElement {
-    return this.titleInput.getComponent();
+  getIDComponent(): HTMLElement {
+    return this.idComponent.getComponent();
   }
 
-  getDescriptionInput(): HTMLElement {
-    return this.descriptionInput.getComponent();
+  getTitleComponent(): HTMLElement {
+    return this.titleComponent.getComponent();
   }
 
-  getPriceInput(): HTMLElement {
-    return this.priceInput.getComponent();
+  getAvailabilityComponent(): HTMLElement {
+    return this.isAvailableComponent.getComponent();
   }
 
-  getUrlInput(): HTMLElement {
-    return this.urlInput.getComponent();
+  getDescriptionComponent(): HTMLElement {
+    return this.descriptionComponent.getComponent();
   }
 
-  getApplyBtn(): HTMLElement {
-    return this.applyBtn.getComponent();
+  getPriceComponent(): HTMLElement {
+    return this.priceComponent.getComponent();
   }
 
-  getDeleteBtn(): HTMLElement {
-    return this.deleteBtn.getComponent();
+  getQuantityComponent(): HTMLElement {
+    return this.quantityComponent.getComponent();
+  }
+
+  getManufacturerComponent(): HTMLElement {
+    return this.manufacturerComponent.getComponent();
+  }
+
+  getImageURLComponent(): HTMLElement {
+    return this.imageURLComponent.getComponent();
+  }
+
+  getBuyButton() {
+    return this.buyButton.getComponent();
+  }
+
+  getCloseButton() {
+    return this.closeButton.getComponent();
   }
 }

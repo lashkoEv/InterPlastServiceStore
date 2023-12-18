@@ -1,6 +1,7 @@
 import {
   AuthorizationWindow,
   Button,
+  ModalWindow,
   ProductCard,
   ProductsWrapper,
   Spinner,
@@ -24,6 +25,7 @@ export class Application {
 
   private spinner: Spinner;
   private authorizationWindow: AuthorizationWindow;
+
   private products: ProductsWrapper;
   private pagination: Pagination;
 
@@ -46,7 +48,12 @@ export class Application {
 
   productsToCards(products: Product[]) {
     return products.map(
-      (product) => new ProductCard(product, this.getBuyEvents())
+      (product) =>
+        new ProductCard(
+          product,
+          this.getBuyEvents(),
+          this.getModalEvents(product)
+        )
     );
   }
 
@@ -74,7 +81,7 @@ export class Application {
     }
 
     buttons[0].classList.add("active");
-    
+
     render(this.pagination.getComponent(), buttons);
   }
 
@@ -93,6 +100,16 @@ export class Application {
   getBuyEvents() {
     // TODO: when the cart will be ready
     return {};
+  }
+
+  getModalEvents(product: Product) {
+    return {
+      dblclick: () => {
+        const modalWindow = new ModalWindow(product, this.getBuyEvents(), {});
+        modalWindow.changeVisibility();
+        console.log(modalWindow);
+      },
+    };
   }
 
   getSendEvents() {
