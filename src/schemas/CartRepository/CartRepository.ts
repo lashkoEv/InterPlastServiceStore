@@ -1,4 +1,4 @@
-import { ProductInCart } from "..";
+import { Product, ProductInCart } from "..";
 import { IRepository } from "../../interfaces";
 
 export class CartRepository implements IRepository<ProductInCart> {
@@ -21,5 +21,8 @@ export class CartRepository implements IRepository<ProductInCart> {
     if (remove !== -1) {
       this.products.splice(remove, 1);
     }
+  }
+  getByProduct(product: Product) {
+    return this.products.find((element) => element.getProduct() === product);
   }
 }

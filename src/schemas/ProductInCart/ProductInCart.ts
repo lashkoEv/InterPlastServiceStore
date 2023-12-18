@@ -6,7 +6,6 @@ export class ProductInCart {
 
   constructor(product: Product) {
     this.product = product;
-
     this.count = 1;
   }
 

@@ -6,6 +6,7 @@ export class CartController {
   constructor() {
     this.cartRepository = new CartRepository();
   }
+
   getAll() {
     return this.cartRepository.getAll();
   }
@@ -15,9 +16,9 @@ export class CartController {
   }
 
   remove(product: Product) {
-    const remove = this.products.findIndex((u) => u === product);
-    if (remove !== -1) {
-      this.products.splice(remove, 1);
+    let found = this.cartRepository.getByProduct(product);
+    if (found) {
+      this.cartRepository.remove(found);
     }
   }
 }
