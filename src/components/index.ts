@@ -6,6 +6,7 @@ import { ProductCard } from './ProductCard/ProductCard';
 import { ProductsWrapper } from './ProductsWrapper/ProductsWrapper';
 import { Main } from './Main/Main';
 import { Header } from './Header/Header';
+import { Footer } from './Footer/Footer';
 export {
   Button,
   Input,
@@ -15,4 +16,5 @@ export {
   ProductsWrapper,
   Main,
   Header,
+  Footer,
 };

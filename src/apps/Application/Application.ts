@@ -6,6 +6,7 @@ import {
   Spinner,
   Main,
   Header,
+  Footer,
 } from '../../components';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { render } from '../../core';
@@ -29,6 +30,7 @@ export class Application {
   private authorizationWindow: AuthorizationWindow;
   private products: ProductsWrapper;
   private pagination: Pagination;
+  private footer: Footer;
 
   constructor() {
     this.app = document.getElementById('app');
@@ -54,6 +56,7 @@ export class Application {
     this.main = new Main({
       children: [this.products.getComponent(), this.pagination.getComponent()],
     });
+    this.footer = new Footer();
   }
 
   productsToCards(products: Product[]) {
@@ -167,7 +170,11 @@ export class Application {
     // TODO: replace with adding header, main and footer
     // TODO: main -> products + pagination + sort button
 
-    render(this.app, [this.header.getComponent(), this.main.getComponent()]);
+    render(this.app, [
+      this.header.getComponent(),
+      this.main.getComponent(),
+      this.footer.getComponent(),
+    ]);
 
     // this.app.append(this.pagination.getComponent());
 
