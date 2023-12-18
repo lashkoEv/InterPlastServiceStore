@@ -2,7 +2,7 @@ export interface IHtmlData {
   tagName?: string;
   className?: string;
   children?: HTMLElement[];
-  textContent?: string;
+  textContent?: string | number;
   events?: {};
   attrs?: {};
 }

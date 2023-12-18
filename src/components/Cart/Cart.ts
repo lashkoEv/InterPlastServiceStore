@@ -6,7 +6,7 @@ import { Product } from "../../schemas";
 export class Cart implements IComponent {
   private component: Component;
 
-  constructor(product: Product, cardEvents: {}) {
+  constructor(product: Product) {
     const img = new Component({
       tagName: "img",
       className: "image",
@@ -18,34 +18,36 @@ export class Cart implements IComponent {
     const description = new Button({
       tagName: "button",
       className: "description",
-      textContent: product.getDescription(),
+      textContent: " < ",
     }).getComponent();
 
     const count = new Component({
       tagName: "p",
       className: "count",
-      textContent: product.getDescription(),
+      textContent: "0",
     }).getComponent();
 
     const increase = new Button({
       tagName: "button",
       className: "increase",
+      textContent: " > ",
     }).getComponent();
 
     const price = new Component({
       tagName: "p",
       className: "price",
+      textContent: product.getPrice(),
     }).getComponent();
 
     const deletebtn = new Button({
       tagName: "button",
       className: "deletebtn",
+      textContent: "Delete",
     }).getComponent();
 
     this.component = new Component({
       className: "cart",
       children: [img, description, count, increase, price, deletebtn],
-      events: cardEvents,
     });
   }
 
