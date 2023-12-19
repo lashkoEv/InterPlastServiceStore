@@ -42,8 +42,8 @@ export class Cart implements IComponent {
     this.price = new Component({
       tagName: "p",
       className: "price",
-      textContent: `${product.getPrice()} ₴`,
-    });
+      textContent: product.getPrice(),
+    }).getComponent();
 
     this.deletebtn = new Button({
       tagName: "button",
