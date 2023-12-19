@@ -7,7 +7,7 @@ import {
   Spinner,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { render } from "../../core";
+import { append, render } from "../../core";
 import {
   Product,
   ProductController,
@@ -29,6 +29,8 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
+  private modalWindow: ModalWindow;
+
   constructor() {
     this.app = document.getElementById("app");
 
@@ -44,6 +46,8 @@ export class Application {
     this.products = new ProductsWrapper();
 
     this.pagination = new Pagination(8);
+
+    this.modalWindow = null;
   }
 
   productsToCards(products: Product[]) {
@@ -105,9 +109,23 @@ export class Application {
   getModalEvents(product: Product) {
     return {
       dblclick: () => {
-        const modalWindow = new ModalWindow(product, this.getBuyEvents(), {});
-        modalWindow.changeVisibility();
-        console.log(modalWindow);
+        this.modalWindow = new ModalWindow(
+          product,
+          this.getBuyEvents(),
+          this.getCloseEvents()
+        );
+        this.modalWindow.changeVisibility();
+        console.log(this.modalWindow);
+        this.app.append(this.modalWindow.getComponent());
+        // append(this.app, modalWindow.getComponent());
+      },
+    };
+  }
+
+  getCloseEvents() {
+    return {
+      click: () => {
+        this.modalWindow.getComponent().remove();
       },
     };
   }

@@ -13,14 +13,17 @@
   flex-direction: column;
   gap: 1rem;
   padding: 3rem;
+  color: aliceblue;
 }
 
-.modal > .input {
-  width: 100%;
-  padding: 0.5rem;
-  border: none;
-  border-bottom: 1px solid rgb(107, 107, 107);
-  background-color: transparent;
+.modal-image {
+  width: 50%;
+}
+
+.modal-table {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .hide {
@@ -35,4 +38,15 @@
 .modal > .error {
   border: none;
   border-bottom: 1px solid rgb(197, 4, 4);
+}
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+}
+.modal > .button {
+  width: 100%;
+  border-radius: 0;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }

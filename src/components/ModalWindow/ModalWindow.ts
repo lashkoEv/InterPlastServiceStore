@@ -8,22 +8,17 @@ import "./ModalWindow.css";
 export class ModalWindow implements IComponent, IWindow {
   private component: Component;
 
-  private idComponent: Component;
   private titleComponent: Component;
   private isAvailableComponent: Component;
   private descriptionComponent: Component;
   private priceComponent: Component;
   private quantityComponent: Component;
   private manufacturerComponent: Component;
-  private imageURLComponent: Component;
+  private imageComponent: Component;
   private buyButton: Button;
   private closeButton: Button;
 
   constructor(product: Product, buyEvents: {}, closeEvents: {}) {
-    this.idComponent = new Component({
-      className: "id",
-      textContent: product.getID(),
-    });
     this.titleComponent = new Component({
       className: "title",
       textContent: product.getTitle(),
@@ -39,7 +34,7 @@ export class ModalWindow implements IComponent, IWindow {
       textContent: product.getDescription(),
     });
     this.priceComponent = new Component({
-      className: "price",
+      className: "modal-price",
       textContent: product.getPrice().toString(),
     });
     this.quantityComponent = new Component({
@@ -50,33 +45,53 @@ export class ModalWindow implements IComponent, IWindow {
       className: "manufacturer",
       textContent: product.getManufacturer(),
     });
-    this.imageURLComponent = new Component({
-      className: "imageURL",
-      textContent: product.getImageURL(),
+    this.imageComponent = new Component({
+      tagName: "img",
+      className: "modal-image",
+      attrs: {
+        src: product.getImageURL(),
+      },
     });
     this.buyButton = new Button({
       textContent: "Buy",
       events: buyEvents,
     });
     this.closeButton = new Button({
-      textContent: "❌",
+      textContent: "Close",
       events: closeEvents,
     });
 
+    const table = new Component({
+      className: "modal-table",
+      children: [
+        new Component({ textContent: "Title: " }).getComponent(),
+        this.getTitleComponent(),
+        new Component({ textContent: "In store: " }).getComponent(),
+        this.getAvailabilityComponent(),
+        new Component({ textContent: "Description: " }).getComponent(),
+        this.getDescriptionComponent(),
+        new Component({ textContent: "Price: " }).getComponent(),
+        this.getPriceComponent(),
+        new Component({ textContent: "Quantity: " }).getComponent(),
+        this.getQuantityComponent(),
+        new Component({ textContent: "Manufacturer: " }).getComponent(),
+        this.getManufacturerComponent(),
+      ],
+    }).getComponent();
+
+    const modalContent = new Component({
+      className: "modal-content",
+      children: [this.getImageURLComponent(), table],
+    }).getComponent();
+
+    const modalButtons = new Component({
+      className: "modal-buttons",
+      children: [this.getBuyButton(), this.getCloseButton()],
+    }).getComponent();
+
     this.component = new Component({
       className: "modal hide",
-      children: [
-        this.getIDComponent(),
-        this.getTitleComponent(),
-        this.getAvailabilityComponent(),
-        this.getDescriptionComponent(),
-        this.getPriceComponent(),
-        this.getQuantityComponent(),
-        this.getManufacturerComponent(),
-        this.getImageURLComponent(),
-        this.getBuyButton(),
-        this.getCloseButton(),
-      ],
+      children: [modalContent, modalButtons],
     });
   }
 
@@ -86,10 +101,6 @@ export class ModalWindow implements IComponent, IWindow {
 
   changeVisibility(): void {
     this.getComponent().classList.toggle("hide");
-  }
-
-  getIDComponent(): HTMLElement {
-    return this.idComponent.getComponent();
   }
 
   getTitleComponent(): HTMLElement {
@@ -117,7 +128,7 @@ export class ModalWindow implements IComponent, IWindow {
   }
 
   getImageURLComponent(): HTMLElement {
-    return this.imageURLComponent.getComponent();
+    return this.imageComponent.getComponent();
   }
 
   getBuyButton() {
