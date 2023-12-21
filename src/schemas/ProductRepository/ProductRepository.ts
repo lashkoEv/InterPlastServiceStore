@@ -96,23 +96,6 @@ export class ProductRepository implements IRepository<Product> {
     return this.products[this.products.length - 1];
   }
 
-<<<<<<< HEAD
-  // --filters
-
-  filterByPrice(products: Product[], HighestPrice: number){
-    return products.filter((el)=>{
-      const productPrice = el.getPrice();
-      
-      if(productPrice <= HighestPrice){
-        return true;
-      }      
-    })
-  }
-
-  filterByAvailability(products: Product[]){
-    return products.filter((el)=>{
-      const productAvailability = el.getAvailability();
-=======
   //   * --- search (Yevheniia)
 
   search(search: string) {
@@ -126,7 +109,6 @@ export class ProductRepository implements IRepository<Product> {
   sortByTitleAsc(products: Product[]) {
     return products.sort((a, b) => {
       if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
->>>>>>> dev
 
       if(productAvailability){
         return true;
@@ -134,16 +116,6 @@ export class ProductRepository implements IRepository<Product> {
     })
   }
 
-<<<<<<< HEAD
-  filterByManufactorer(products: Product[], manufacturer: string){
-    return products.filter((el)=>{
-      const productManufactorer = el.getManufacturer();
-      
-      if(productManufactorer === manufacturer){
-        return true;
-      }      
-    })
-=======
   sortByTitleDesc(products: Product[]) {
     return products.sort((a, b) => {
       if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
@@ -217,7 +189,6 @@ export class ProductRepository implements IRepository<Product> {
     }
 
     return byPage;
->>>>>>> dev
   }
 
   //   * --- filters (Ruslan)
