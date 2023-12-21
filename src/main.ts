@@ -1,3 +1,15 @@
+// import { Application } from "./apps";
+// import "./style.css";
+
+// const application = new Application();
+
+// // application.run();
+
+// const a = new ProductRepository();
+
+
+import { CheckBox } from "./components/CheckBox/CheckBox";
+import { Component, append } from "./core";
 import { Product, ProductRepository } from "./schemas";
 
 import "./style.css";
@@ -27,7 +39,13 @@ const products = new ProductRepository();
 
 products.addMany([a, b, c])
 
-// console.log(products.filterByPrice(products.products, 100));
-// console.log(products.filterByAvailability(products.products));
-console.log(products.filterByManufactorer(products.products, 'samsung'));
+
+
+const huy = new CheckBox(products.products, 'manufacturer');
+
+console.log(huy);
+
+const app = document.querySelector('#app') as HTMLElement;
+
+append(app, huy.getComponent());
 
