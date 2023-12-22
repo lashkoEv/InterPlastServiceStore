@@ -41,11 +41,11 @@ products.addMany([a, b, c])
 
 
 
-const huy = new CheckBox(products.products, 'manufacturer');
+const asd = new CheckBox(products.getAll(), 'manufacturer');
 
-console.log(huy);
+console.log(asd);
 
 const app = document.querySelector('#app') as HTMLElement;
 
-append(app, huy.getComponent());
+append(app, asd.getComponent());
 
