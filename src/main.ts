@@ -9,6 +9,7 @@
 
 
 import { CheckBox } from "./components/CheckBox/CheckBox";
+import { Selector } from "./components/Selector/Selector";
 import { Component, append } from "./core";
 import { Product, ProductRepository } from "./schemas";
 
@@ -39,13 +40,18 @@ const products = new ProductRepository();
 
 products.addMany([a, b, c])
 
+// console.log('[products]', products.products);
+
 
 
 const asd = new CheckBox(products.getAll(), 'manufacturer');
-
-console.log(asd);
 
 const app = document.querySelector('#app') as HTMLElement;
 
 append(app, asd.getComponent());
 
+let arr = ['ss','bb','dd'];
+
+const abv = new Selector(arr);
+
+append(app, abv.getComponent())
