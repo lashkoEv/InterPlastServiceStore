@@ -8,6 +8,7 @@
 // const a = new ProductRepository();
 
 
+import { SideBar } from "./components";
 import { CheckBox } from "./components/CheckBox/CheckBox";
 import { Selector } from "./components/Selector/Selector";
 import { Component, append } from "./core";
@@ -55,3 +56,7 @@ const app = document.querySelector('#app') as HTMLElement;
 // const abv = new Selector(arr);
 
 // append(app, abv.getComponent())
+
+const sideBar = new SideBar().getComponent();
+
+append(app, sideBar)
