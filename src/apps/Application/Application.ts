@@ -150,6 +150,7 @@ export class Application {
         this.setDisplayedProducts(
           this.productController.search(this.header.getSearchInput().value)
         );
+        this.header.reset();
       },
     };
   }
