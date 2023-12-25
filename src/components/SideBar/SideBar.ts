@@ -15,14 +15,14 @@ export class SideBar implements IComponent{
                 id: 'sideBar'
             },
             children: [
-                this.getChildren(products, 'Sort:', [new Selector(['ss', 'dd', 'aa'])]),
-                this.getChildren(products, 'Is availible:',[new CheckBox('Available'), new CheckBox('Unavailable')]),
-                this.getChildren(products, 'Manufactorer', [new CheckBox('manufactorer', products)])
+                this.getChildren('Sort:', [new Selector(['ss', 'dd', 'aa'])]),
+                this.getChildren('Is availible:',[new CheckBox('Available'), new CheckBox('Unavailable')]),
+                this.getChildren('Manufactorer', [new CheckBox(products, 'manufacturer').getComponents()], products)
             ]
         })
     }
 
-    getChildren(products: object[], title: string, newComponent: Component[]){
+    getChildren(title: string, newComponent: Component[], products?: object[]){
         const childrenWrapper = new Component({
             tagName: 'div',
             className: `${title}-wrapper`,
@@ -36,7 +36,9 @@ export class SideBar implements IComponent{
         }).getComponent()
 
         newComponent.forEach((el)=>{
-            append(childrenWrapper, el.getComponent());
+            if(products){
+                append(childrenWrapper, el);
+            } else append(childrenWrapper, el.getComponent())
         })
         
         return childrenWrapper;

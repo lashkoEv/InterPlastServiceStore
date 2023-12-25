@@ -3,10 +3,11 @@ import {
   Button,
   ProductCard,
   ProductsWrapper,
+  SideBar,
   Spinner,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { render } from "../../core";
+import { Component, render } from "../../core";
 import {
   Product,
   ProductController,
@@ -27,6 +28,8 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
+  private sideBar: Component;
+
   constructor() {
     this.app = document.getElementById("app");
 
@@ -41,7 +44,7 @@ export class Application {
 
     this.products = new ProductsWrapper();
 
-    this.pagination = new Pagination(8);
+    this.pagination = new Pagination(8);    
   }
 
   productsToCards(products: Product[]) {
