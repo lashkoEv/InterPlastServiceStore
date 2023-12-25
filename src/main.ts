@@ -10,6 +10,7 @@
 
 import { SideBar } from "./components";
 import { CheckBox } from "./components/CheckBox/CheckBox";
+import { MinPriceMaxPrice } from "./components/MinPrice-MaxPrice/MinPrice-MaxPrice";
 import { Selector } from "./components/Selector/Selector";
 import { Component, append } from "./core";
 import { Product, ProductRepository } from "./schemas";
@@ -41,6 +42,9 @@ const products = new ProductRepository();
 
 products.addMany([a, b, c])
 
+console.log(products);
+
+
 // console.log('[products]', products.products);
 
 
@@ -57,6 +61,10 @@ const app = document.querySelector('#app') as HTMLElement;
 
 // append(app, abv.getComponent())
 
-const sideBar = new SideBar().getComponent();
+// const sideBar = new SideBar().getComponent();
 
-append(app, sideBar)
+// append(app, sideBar)
+
+const min = new MinPriceMaxPrice(products.products).getComponent()
+
+append(app, min)
