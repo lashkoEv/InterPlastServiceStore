@@ -8,11 +8,20 @@ application.run();
 // const a = new ProductRepository();
 
 
+<<<<<<< HEAD
 // import { SideBar } from "./components";
 // import { CheckBox } from "./components/CheckBox/CheckBox";
 // import { Selector } from "./components/Selector/Selector";
 // import { Component, append } from "./core";
 // import { Product, ProductRepository } from "./schemas";
+=======
+import { SideBar } from "./components";
+import { CheckBox } from "./components/CheckBox/CheckBox";
+import { MinPriceMaxPrice } from "./components/MinPrice-MaxPrice/MinPrice-MaxPrice";
+import { Selector } from "./components/Selector/Selector";
+import { Component, append } from "./core";
+import { Product, ProductRepository } from "./schemas";
+>>>>>>> 9ddfeccb3e0c31a08423012c64e377aa6d673845
 
 // import "./style.css";
 // import { getProducts } from "./utils";
@@ -42,7 +51,14 @@ application.run();
 
 // products.addMany([a, b, c])
 
+<<<<<<< HEAD
 // // console.log('[products]', products.products);
+=======
+console.log(products);
+
+
+// console.log('[products]', products.products);
+>>>>>>> 9ddfeccb3e0c31a08423012c64e377aa6d673845
 
 
 
@@ -58,6 +74,16 @@ application.run();
 
 // // append(app, abv.getComponent())
 
+<<<<<<< HEAD
 // const sideBar = new SideBar(getProducts()).getComponent();
 
 // append(app, sideBar)
+=======
+// const sideBar = new SideBar().getComponent();
+
+// append(app, sideBar)
+
+const min = new MinPriceMaxPrice(products.products).getComponent()
+
+append(app, min)
+>>>>>>> 9ddfeccb3e0c31a08423012c64e377aa6d673845
