@@ -3,7 +3,7 @@ import { Component } from "../../core";
 import { IComponent } from "../../interfaces";
 import { Product } from "../../schemas";
 
-export class Cart implements IComponent {
+export class CartProduct implements IComponent {
   private component: Component;
   private img: Component;
   private decrease: Button;
@@ -13,7 +13,7 @@ export class Cart implements IComponent {
   private deletebtn: Button;
   private totalprice: Component;
 
-  constructor(product: Product, deleteEvents: {}) {
+  constructor(product: Product, deleteEvents: {}, decreaseEvents: {}, increaseEvents: {} ) {
     this.img = new Component({
       tagName: "img",
       className: "image",
@@ -23,34 +23,33 @@ export class Cart implements IComponent {
     });
 
     this.decrease = new Button({
-      tagName: "button",
       className: "decrease",
       textContent: " < ",
-
+      events: decreaseEvents,
     });
 
     this.count = new Component({
       tagName: "div",
       className: "count",
-      textContent: "0",
+      textContent: "1",
     });
 
     this.increase = new Button({
-      tagName: "button",
       className: "increase",
       textContent: " > ",
+      events: increaseEvents,
     });
 
     this.price = new Component({
       tagName: "div",
       className: "price",
-      textContent: `${product.getPrice()}`,
+      textContent: `${product.getPrice()} ₴`,
     });
 
     this.deletebtn = new Button({
       tagName: "button",
       className: "deletebtn",
-      textContent: "Delete",
+      textContent: "🗑️",
       events: deleteEvents,
     });
 
@@ -61,9 +60,8 @@ export class Cart implements IComponent {
     })
 
     this.component = new Component({
-      className: "cart",
+      className: "cartproduct",
       children: [
-        this.getComponent(),
         this.getImg(),
         this.getDecrease(),
         this.getCount(),

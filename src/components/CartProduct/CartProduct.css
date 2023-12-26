@@ -1,0 +1,26 @@
+.cartproduct {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid ;
+    border-radius: 10px;
+}
+.image {
+    width: 100px;
+    margin: 20px;
+}
+.count {
+    margin: 20px;
+    font-size: 20px;
+}
+.price {
+    margin: 10px;
+}
+.increase{
+    margin-right: 30px;
+}
+.deletebtn {
+    margin: 20px;
+    margin-left: 100px;
+    background-color: brown;
+}
