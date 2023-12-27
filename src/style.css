@@ -25,6 +25,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -36,10 +38,14 @@ h1 {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100vw;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .logo {
@@ -112,7 +118,7 @@ button:focus-visible {
   padding: 3rem;
 }
 
-.modal > .input {
+.input {
   width: 100%;
   padding: 0.5rem;
   border: none;

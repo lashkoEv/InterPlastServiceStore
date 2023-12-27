@@ -6,6 +6,7 @@ import { AuthorizationWindow } from "./AuthorizationWindow/AuthorizationWindow";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
 import { Main } from "./Main/Main";
+import { Header } from "./Header/Header";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   ProductCard,
   ProductsWrapper,
   Main,
+  Header
 };
