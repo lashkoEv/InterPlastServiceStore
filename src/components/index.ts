@@ -11,6 +11,7 @@ import { Footer } from "./Footer/Footer";
 import { ProductInTable } from "./ProductInTable/ProductInTable";
 import { ProductTable } from "./ProductTable/ProductTable";
 import { AdminPanel } from "./AdminPanel/AdminPanel";
+import { ProductModalWindow } from "./ProductModalWindow/ProductModalWindow";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   ProductInTable,
   ProductTable,
   AdminPanel,
+  ProductModalWindow,
 };

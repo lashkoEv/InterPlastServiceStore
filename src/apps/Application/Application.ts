@@ -10,9 +10,10 @@ import {
   Footer,
   AdminPanel,
   ProductInTable,
+  ProductModalWindow,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { removeChildren, render } from "../../core";
+import { append, removeChildren, render } from "../../core";
 import { UserType } from "../../enums";
 import {
   Product,
@@ -43,6 +44,8 @@ export class Application {
   private modalWindow: ModalWindow;
 
   private adminPanel: AdminPanel;
+  private productModalWindow: ProductModalWindow;
+  private currentProduct: Product | null;
 
   constructor() {
     this.app = document.getElementById("app");
@@ -74,11 +77,53 @@ export class Application {
     this.footer = new Footer();
 
     this.adminPanel = new AdminPanel(this.getAddEvents());
+
+    this.productModalWindow = new ProductModalWindow(this.getModalSendEvents());
+
+    this.currentProduct = null;
   }
 
-  // TODO
+  getModalSendEvents() {
+    return {
+      click: () => {
+        const info = this.productModalWindow.getFields();
+
+        if (this.currentProduct) {
+          this.productController.update(
+            this.currentProduct,
+            info.title,
+            this.currentProduct.getAvailability(),
+            info.description,
+            info.price,
+            info.quantity,
+            info.manufacturer,
+            this.currentProduct.getImageURL()
+          );
+        } else {
+          this.productController.add(
+            info.title,
+            true,
+            info.description,
+            info.price,
+            info.quantity,
+            info.manufacturer,
+            "public/images/image.png"
+          );
+        }
+
+        this.productModalWindow.getComponent().remove();
+        this.setProductsToAdminPanel();
+        this.currentProduct = null;
+      },
+    };
+  }
+  
   getAddEvents() {
-    return {};
+    return {
+      click: () => {
+        append(this.app, this.productModalWindow.getComponent());
+      },
+    };
   }
 
   getSearchBtnEvents() {
@@ -107,20 +152,25 @@ export class Application {
   setProductsToAdminPanel() {
     const products = this.productController.getAll();
 
-    const productsInTable = products.map(product => {
-      return new ProductInTable(product, this.getEditEvents(product), this.getDeleteEvents(product));
+    const productsInTable = products.map((product) => {
+      return new ProductInTable(
+        product,
+        this.getEditEvents(product),
+        this.getDeleteEvents(product)
+      );
     });
 
-    this.adminPanel.refresh(productsInTable)
+    this.adminPanel.refresh(productsInTable);
   }
 
-   // TODO
   getEditEvents(product: Product) {
     return {
       click: () => {
-
-      }
-    }
+        this.currentProduct = product;
+        append(this.app, this.productModalWindow.getComponent());
+        this.productModalWindow.setFields(product);
+      },
+    };
   }
 
   getDeleteEvents(product: Product) {
@@ -129,8 +179,8 @@ export class Application {
         this.productController.delete(product);
 
         this.setProductsToAdminPanel();
-      }
-    }
+      },
+    };
   }
 
   getLoginBtnEvents() {
