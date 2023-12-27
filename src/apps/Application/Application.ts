@@ -14,6 +14,7 @@ import {
   User,
   UserController,
 } from "../../schemas";
+import { availabilityLabels, sortingLabels } from "../../utils";
 
 export class Application {
   private app: HTMLElement;
@@ -28,7 +29,7 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
-  private sideBar: Component;
+  private sideBar: SideBar;
 
   constructor() {
     this.app = document.getElementById("app");
@@ -44,7 +45,17 @@ export class Application {
 
     this.products = new ProductsWrapper();
 
-    this.pagination = new Pagination(8);    
+    this.pagination = new Pagination(8);
+    
+    this.sideBar = new SideBar(sortingLabels, this.productController.getMinPrice(), this.productController.getMaxPrice(), availabilityLabels, this.productController.getManufacturers(), this.getFilterEvents());
+  }
+
+  getFilterEvents(){
+    return {};
+  }
+
+  getSelectLabels(){
+    return ['ss', 'dd', 'ff'];
   }
 
   productsToCards(products: Product[]) {
@@ -147,6 +158,7 @@ export class Application {
     // TODO: main -> products + pagination + sort button
 
     render(this.app, this.products.getComponent());
+    this.app.append(this.sideBar.getComponent());
     this.app.append(this.pagination.getComponent());
     this.setPagination(this.productController.getAll());
     this.setDisplayedProducts(this.productController.getAll());

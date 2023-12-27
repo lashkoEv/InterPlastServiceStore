@@ -6,7 +6,8 @@ import { AuthorizationWindow } from "./AuthorizationWindow/AuthorizationWindow";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
 import { CheckBox } from "./CheckBox/CheckBox";
-import { Selector } from "./Selector/Selector";
+import { Select } from "./Select/Select";
+import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
 import { SideBar } from "./SideBar/SideBar";
 
 export {
@@ -18,6 +19,7 @@ export {
   ProductCard,
   ProductsWrapper,
   CheckBox,
-  Selector,
+  Select,
+  MinMaxPrice,
   SideBar
 };

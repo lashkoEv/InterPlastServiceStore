@@ -198,7 +198,6 @@ export class ProductRepository implements IRepository<Product> {
       const productPrice = el.getPrice();
 
       if (productPrice >= minPrice && productPrice <= maxPrice) {
-        console.log(el);
         
         return true;
       }
@@ -224,4 +223,19 @@ export class ProductRepository implements IRepository<Product> {
       }
     });
   }
+
+  getManufacturers(){
+    return this.products.map(product => {
+      return product.getManufacturer();
+    })
+  }
+
+  getMinPrice(){
+    return this.products.reduce((prev, curr)=> prev.getPrice() < curr.getPrice() ? prev : curr).getPrice()
+  }
+
+  getMaxPrice(){
+    return this.products.reduce((prev, curr)=> prev.getPrice() > curr.getPrice() ? prev : curr).getPrice()
+  }
 }
+

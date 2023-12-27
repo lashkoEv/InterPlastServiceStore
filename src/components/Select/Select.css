@@ -11,4 +11,5 @@
     border: 1px solid;
     box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    margin-bottom: 20px;
 }

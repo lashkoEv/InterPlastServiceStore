@@ -65,6 +65,10 @@ export class ProductController {
     );
   }
 
+  getManufacturers(){
+    return this.productRepository.getManufacturers();
+  }
+
   search(search: string) {
     return this.productRepository.search(search);
   }
@@ -89,5 +93,13 @@ export class ProductController {
 
   getByPage(page: number, amount: number, products: Product[]) {
     return this.productRepository.getByPage(page, amount, products);
+  }
+
+  getMinPrice(){
+    return this.productRepository.getMinPrice();
+  }
+
+  getMaxPrice(){
+    return this.productRepository.getMaxPrice();
   }
 }

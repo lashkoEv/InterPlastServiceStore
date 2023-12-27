@@ -1,0 +1,9 @@
+.to{
+    font-size: 30px;
+}
+
+.min-max-price-wrapper{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
