@@ -1,6 +1,8 @@
 import { Component } from "../../core";
 import { IComponent } from "../../interfaces";
 
+import "./Main.css";
+
 export class Main implements IComponent {
   private component: Component;
 

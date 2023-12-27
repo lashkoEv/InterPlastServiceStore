@@ -7,6 +7,10 @@ import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
 import { Main } from "./Main/Main";
 import { Header } from "./Header/Header";
+import { Footer } from "./Footer/Footer";
+import { ProductInTable } from "./ProductInTable/ProductInTable";
+import { ProductTable } from "./ProductTable/ProductTable";
+import { AdminPanel } from "./AdminPanel/AdminPanel";
 
 export {
   Button,
@@ -17,5 +21,9 @@ export {
   ProductCard,
   ProductsWrapper,
   Main,
-  Header
+  Header,
+  Footer,
+  ProductInTable,
+  ProductTable,
+  AdminPanel,
 };

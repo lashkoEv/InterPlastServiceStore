@@ -7,8 +7,10 @@ import {
   ProductCard,
   ProductsWrapper,
   Spinner,
+  Footer,
+  AdminPanel,
+  ProductInTable,
 } from "../../components";
-import { Footer } from "../../components/Footer/Footer";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { removeChildren, render } from "../../core";
 import { UserType } from "../../enums";
@@ -40,8 +42,12 @@ export class Application {
 
   private modalWindow: ModalWindow;
 
+  private adminPanel: AdminPanel;
+
   constructor() {
     this.app = document.getElementById("app");
+
+    this.modalWindow = null;
 
     this.userController = new UserController();
     this.currentUser = undefined;
@@ -67,7 +73,12 @@ export class Application {
 
     this.footer = new Footer();
 
-    this.modalWindow = null;
+    this.adminPanel = new AdminPanel(this.getAddEvents());
+  }
+
+  // TODO
+  getAddEvents() {
+    return {};
   }
 
   getSearchBtnEvents() {
@@ -84,8 +95,42 @@ export class Application {
   }
 
   getAdminPanelBtnEvents() {
-    // TODO
-    return {};
+    return {
+      click: () => {
+        render(this.main.getComponent(), this.adminPanel.getComponent());
+
+        this.setProductsToAdminPanel();
+      },
+    };
+  }
+
+  setProductsToAdminPanel() {
+    const products = this.productController.getAll();
+
+    const productsInTable = products.map(product => {
+      return new ProductInTable(product, this.getEditEvents(product), this.getDeleteEvents(product));
+    });
+
+    this.adminPanel.refresh(productsInTable)
+  }
+
+   // TODO
+  getEditEvents(product: Product) {
+    return {
+      click: () => {
+
+      }
+    }
+  }
+
+  getDeleteEvents(product: Product) {
+    return {
+      click: () => {
+        this.productController.delete(product);
+
+        this.setProductsToAdminPanel();
+      }
+    }
   }
 
   getLoginBtnEvents() {
