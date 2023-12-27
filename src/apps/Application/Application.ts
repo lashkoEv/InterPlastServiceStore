@@ -3,6 +3,7 @@ import {
   Button,
   Header,
   Main,
+  ModalWindow,
   ProductCard,
   ProductsWrapper,
   Spinner,
@@ -37,6 +38,8 @@ export class Application {
   private main: Main;
   private footer: Footer;
 
+  private modalWindow: ModalWindow;
+
   constructor() {
     this.app = document.getElementById("app");
 
@@ -63,6 +66,8 @@ export class Application {
     );
 
     this.footer = new Footer();
+
+    this.modalWindow = null;
   }
 
   getSearchBtnEvents() {
@@ -104,7 +109,11 @@ export class Application {
   productsToCards(products: Product[]) {
     return products.map(
       (product) =>
-        new ProductCard(product, this.getBuyEvents(), this.getShowEvents())
+        new ProductCard(
+          product,
+          this.getBuyEvents(),
+          this.getShowEvents(product)
+        )
     );
   }
 
@@ -162,13 +171,24 @@ export class Application {
     };
   }
 
-  getShowEvents() {
+  getShowEvents(product: Product) {
     return {
-      dblclick: (e) => {
-        // TODO: create modal window of product
-        if (e.target.tagName !== "BUTTON") {
-          console.log("show modal window: all info about product");
-        }
+      dblclick: () => {
+        this.modalWindow = new ModalWindow(
+          product,
+          this.getBuyEvents(),
+          this.getCloseEvents()
+        );
+        this.modalWindow.changeVisibility();
+        this.app.append(this.modalWindow.getComponent());
+      },
+    };
+  }
+
+  getCloseEvents() {
+    return {
+      click: () => {
+        this.modalWindow.getComponent().remove();
       },
     };
   }
