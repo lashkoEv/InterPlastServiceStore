@@ -117,7 +117,7 @@ export class Application {
       },
     };
   }
-  
+
   getAddEvents() {
     return {
       click: () => {
@@ -196,8 +196,8 @@ export class Application {
     };
   }
 
+  // TODO
   getCartBtnEvents() {
-    // TODO
     return {};
   }
 
@@ -269,6 +269,10 @@ export class Application {
   getShowEvents(product: Product) {
     return {
       dblclick: () => {
+        if (this.modalWindow) {
+          this.modalWindow.getComponent().remove();
+        }
+
         this.modalWindow = new ModalWindow(
           product,
           this.getBuyEvents(),
