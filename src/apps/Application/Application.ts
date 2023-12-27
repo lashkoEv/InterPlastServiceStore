@@ -1,12 +1,13 @@
 import {
   AuthorizationWindow,
   Button,
+  Main,
   ProductCard,
   ProductsWrapper,
   Spinner,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { render } from "../../core";
+import { append, render } from "../../core";
 import {
   Product,
   ProductController,
@@ -27,6 +28,8 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
+  private main: Main;
+
   constructor() {
     this.app = document.getElementById("app");
 
@@ -42,6 +45,8 @@ export class Application {
     this.products = new ProductsWrapper();
 
     this.pagination = new Pagination(8);
+
+    this.main = new Main();
   }
 
   productsToCards(products: Product[]) {
@@ -140,11 +145,11 @@ export class Application {
   }
 
   launchApp() {
-    // TODO: replace with adding header, main and footer
-    // TODO: main -> products + pagination + sort button
-
-    render(this.app, this.products.getComponent());
-    this.app.append(this.pagination.getComponent());
+    // TODO: replace with adding header, sidebar, (+) main and footer
+    // + main -> products + pagination
+    render(this.app, this.main.getComponent());
+    render(this.main.getComponent(), this.products.getComponent());
+    append(this.main.getComponent(), this.pagination.getComponent());
     this.setPagination(this.productController.getAll());
     this.setDisplayedProducts(this.productController.getAll());
   }

@@ -5,6 +5,7 @@ import { ModalWindow } from "./ModalWindow/ModalWindow";
 import { AuthorizationWindow } from "./AuthorizationWindow/AuthorizationWindow";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
+import { Main } from "./Main/Main";
 
 export {
   Button,
@@ -14,4 +15,5 @@ export {
   AuthorizationWindow,
   ProductCard,
   ProductsWrapper,
+  Main,
 };
