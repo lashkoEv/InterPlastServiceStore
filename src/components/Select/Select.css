@@ -1,0 +1,15 @@
+.selector {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 100%;
+  padding: 1rem 4rem 1rem 1rem;
+  color: white;
+  border-radius: 0.25em;
+  border: 1px solid;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-bottom: 20px;
+}

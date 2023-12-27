@@ -11,6 +11,7 @@ import {
   AdminPanel,
   ProductInTable,
   ProductModalWindow,
+  SideBar,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { append, removeChildren, render } from "../../core";
@@ -21,8 +22,11 @@ import {
   User,
   UserController,
 } from "../../schemas";
+import { availabilityLabels, sortingLabels } from "../../utils";
 
 export class Application {
+  private toShow: Product[];
+
   private MAX_COUNT = 8;
 
   private app: HTMLElement;
@@ -38,6 +42,7 @@ export class Application {
   private pagination: Pagination;
 
   private header: Header;
+  private sidebar: SideBar;
   private main: Main;
   private footer: Footer;
 
@@ -49,6 +54,8 @@ export class Application {
 
   constructor() {
     this.app = document.getElementById("app");
+
+    this.toShow = [];
 
     this.modalWindow = null;
 
@@ -81,6 +88,110 @@ export class Application {
     this.productModalWindow = new ProductModalWindow(this.getModalSendEvents());
 
     this.currentProduct = null;
+
+    this.sidebar = new SideBar(
+      sortingLabels,
+      this.productController.getMinPrice(),
+      this.productController.getMaxPrice(),
+      availabilityLabels,
+      this.productController.getManufacturers(),
+      this.getFilterEvents()
+    );
+  }
+
+  getFilterEvents() {
+    return {
+      click: () => {
+        if (this.toShow.length <= 0) {
+          this.toShow = this.productController.getAll();
+        }
+
+        this.selectSorting(this.sidebar.getSelect().value);
+
+        this.filterByPrice();
+
+        this.filterByManufacturers();
+
+        this.filterByAvailability();
+
+        this.show();
+      },
+    };
+  }
+
+  selectSorting(criteria: string) {
+    switch (criteria) {
+      case sortingLabels[0]: {
+        this.toShow = this.productController.sortByTitle(true, this.toShow);
+        break;
+      }
+      case sortingLabels[1]: {
+        this.toShow = this.productController.sortByTitle(false, this.toShow);
+        break;
+      }
+      case sortingLabels[2]: {
+        this.toShow = this.productController.sortByPrice(true, this.toShow);
+        break;
+      }
+      case sortingLabels[3]: {
+        this.toShow = this.productController.sortByPrice(false, this.toShow);
+        break;
+      }
+      case sortingLabels[4]: {
+        this.toShow = this.productController.sortByAvailability(
+          true,
+          this.toShow
+        );
+        break;
+      }
+      case sortingLabels[5]: {
+        this.toShow = this.productController.sortByAvailability(
+          false,
+          this.toShow
+        );
+        break;
+      }
+    }
+  }
+
+  filterByPrice() {
+    this.toShow = this.productController.filterByPrice(
+      this.toShow,
+      this.sidebar.getMinMaxPrice().getMinValue(),
+      this.sidebar.getMinMaxPrice().getMaxValue()
+    );
+  }
+
+  filterByManufacturers() {
+    const checkBoxes = this.sidebar
+      .getManufacturers()
+      .filter((el) => el.children[0].checked);
+
+    const manufacturers = checkBoxes.map((el) => el.children[1].textContent);
+
+    if (manufacturers.length > 0) {
+      this.toShow = this.productController.filterByManufacturer(
+        this.toShow,
+        manufacturers
+      );
+    }
+  }
+
+  filterByAvailability() {
+    const checkBoxes = this.sidebar
+      .getAvailability()
+      .filter((el) => el.children[0].checked);
+
+    const availability = checkBoxes.map((el) =>
+      el.children[1].textContent === "Available" ? true : false
+    );
+
+    if (availability.length > 0) {
+      this.toShow = this.productController.filterByAvailability(
+        this.toShow,
+        availability
+      );
+    }
   }
 
   getModalSendEvents() {
@@ -129,14 +240,19 @@ export class Application {
   getSearchBtnEvents() {
     return {
       click: () => {
-        const products = this.productController.search(
+        this.toShow = this.productController.search(
           this.header.getSearchInput().value
         );
-        this.setPagination(products);
-        this.setDisplayedProducts(products);
-        this.header.reset();
+
+        this.show();
       },
     };
+  }
+
+  show() {
+    this.setPagination(this.toShow);
+    this.setDisplayedProducts(this.toShow);
+    this.header.reset();
   }
 
   getAdminPanelBtnEvents() {
@@ -276,6 +392,7 @@ export class Application {
         this.modalWindow = new ModalWindow(
           product,
           this.getBuyEvents(),
+
           this.getCloseEvents()
         );
         this.modalWindow.changeVisibility();
@@ -327,10 +444,9 @@ export class Application {
   }
 
   launchApp() {
-    // TODO: sidebar to app
-
     render(this.app, [
       this.header.getComponent(),
+      this.sidebar.getComponent(),
       this.main.getComponent(),
       this.footer.getComponent(),
     ]);
@@ -340,8 +456,8 @@ export class Application {
       this.pagination.getComponent(),
     ]);
 
-    this.setPagination(this.productController.getAll());
-    this.setDisplayedProducts(this.productController.getAll());
+    this.toShow = this.productController.getAll();
+    this.show();
   }
 
   run() {
