@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .check-box{
     margin-right: 10px;
 }
@@ -5,3 +6,15 @@
 .check-box-wrapper{
     display: flex;
 }
+=======
+.check-box {
+  margin-right: 1rem;
+  font-size: 2rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+>>>>>>> dev

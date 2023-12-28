@@ -1,6 +1,7 @@
 .product {
   border-radius: 1rem;
   background-color: #333333;
+  text-align: center;
 }
 
 .image {
@@ -10,9 +11,8 @@
 }
 
 .title {
-  padding: 1rem;
+  padding: 1rem 0;
   font-size: 1rem;
-  /* text-align: start; */
 }
 
 .price {
