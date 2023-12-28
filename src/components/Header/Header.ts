@@ -60,8 +60,11 @@ export class Header implements IComponent {
   getComponent(): HTMLElement | HTMLInputElement {
     return this.component.getComponent();
   }
-  changeVisibility(): void {
-    this.getAdminPanelBtn().classList.toggle('hide');
+  addVisibilityAdminBtn(): void {
+    this.getAdminPanelBtn().classList.remove('hide');
+  }
+  removeVisibilityAdminBtn(): void {
+    this.getAdminPanelBtn().classList.add('hide');
   }
 
   getSearchInput() {

@@ -127,11 +127,13 @@ export class Application {
           if (this.currentUser.getUserType() === UserType.Admin) {
             console.log('admin');
             setTimeout(() => {
-              this.header.changeVisibility();
+              this.header.addVisibilityAdminBtn();
               this.launchApp();
             }, 2000);
           } else if (this.currentUser.getUserType() !== UserType.Admin) {
             console.log('guest');
+            this.header.removeVisibilityAdminBtn();
+
             setTimeout(() => {
               this.launchApp();
             }, 2000);
