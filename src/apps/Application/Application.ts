@@ -121,9 +121,6 @@ export class Application {
     }
   }
 
-<<<<<<< HEAD
-  getFilterEvents(){}
-=======
   getFilterEvents() {
     return {
       click: () => {
@@ -341,7 +338,6 @@ export class Application {
   getCartBtnEvents() {
     return {};
   }
->>>>>>> 27728ac99de6cf2109f891ce08a09297c1c726c5
 
   productsToCards(products: Product[]) {
     return products.map(
