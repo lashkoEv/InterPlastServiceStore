@@ -30,7 +30,7 @@ export class Header implements IComponent {
     });
     this.adminPanelBtn = new Button({
       textContent: 'Admin Panel',
-      className: 'admin__panel__btn hide',
+      className: 'admin__panel__btn',
       events: adminPanelBtnEvent,
     });
     this.loginBtn = new Button({
@@ -50,7 +50,7 @@ export class Header implements IComponent {
       children: [
         this.getSearchInput(),
         this.getSearchBtn(),
-        this.getAdminPanelBtn(),
+
         this.getLoginBtn(),
         this.getCartBtn(),
       ],
@@ -60,11 +60,11 @@ export class Header implements IComponent {
   getComponent(): HTMLElement | HTMLInputElement {
     return this.component.getComponent();
   }
-  addVisibilityAdminBtn(): void {
-    this.getAdminPanelBtn().classList.remove('hide');
+  addAdminBtn(): void {
+    this.getComponent().append(this.getAdminPanelBtn());
   }
-  removeVisibilityAdminBtn(): void {
-    this.getAdminPanelBtn().classList.add('hide');
+  removeAdminBtn(): void {
+    this.getAdminPanelBtn().remove();
   }
 
   getSearchInput() {
