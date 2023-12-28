@@ -10,13 +10,20 @@ export class Header implements IComponent {
   private adminPanelBtn: Button;
   private loginBtn: Button;
   private cartBtn: Button;
+  private homeTitleBtn: Button;
 
   constructor(
     searchBtnEvent: {},
     adminPanelBtnEvent: {},
     loginBtnEvent: {},
-    cartBtnEvent: {}
+    cartBtnEvent: {},
+    homeEvent: {}
   ) {
+    this.homeTitleBtn = new Button({
+      className: 'home-title-btn',
+      textContent: 'Web-site name',
+      events: homeEvent
+    });
     this.searchInput = new Input({
       className: "search__input",
       attrs: {
@@ -48,6 +55,7 @@ export class Header implements IComponent {
       tagName: "header",
       className: "header",
       children: [
+        this.getHomeTitleBtn(),
         this.getSearchInput(),
         this.getSearchBtn(),
         this.getAdminPanelBtn(),
@@ -62,6 +70,10 @@ export class Header implements IComponent {
   }
   changeVisibility(): void {
     this.getAdminPanelBtn().classList.toggle("hide");
+  }
+
+  getHomeTitleBtn(){
+    return this.homeTitleBtn.getComponent()
   }
 
   getSearchInput() {

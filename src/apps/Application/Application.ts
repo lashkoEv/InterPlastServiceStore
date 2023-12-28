@@ -6,7 +6,6 @@ import {
   ModalWindow,
   ProductCard,
   ProductsWrapper,
-  SideBar,
   Spinner,
   Footer,
   AdminPanel,
@@ -15,12 +14,8 @@ import {
   SideBar,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-<<<<<<< HEAD
 import { append, removeChildren, render } from "../../core";
 import { UserType } from "../../enums";
-=======
-import { Component, render } from "../../core";
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
 import {
   Product,
   ProductController,
@@ -46,7 +41,6 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
-<<<<<<< HEAD
   private header: Header;
   private sidebar: SideBar;
   private main: Main;
@@ -57,9 +51,6 @@ export class Application {
   private adminPanel: AdminPanel;
   private productModalWindow: ProductModalWindow;
   private currentProduct: Product | null;
-=======
-  private sideBar: SideBar;
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
 
   constructor() {
     this.app = document.getElementById("app");
@@ -79,7 +70,6 @@ export class Application {
 
     this.products = new ProductsWrapper();
 
-<<<<<<< HEAD
     this.pagination = new Pagination(this.MAX_COUNT);
 
     this.main = new Main();
@@ -88,7 +78,8 @@ export class Application {
       this.getSearchBtnEvents(),
       this.getAdminPanelBtnEvents(),
       this.getLoginBtnEvents(),
-      this.getCartBtnEvents()
+      this.getCartBtnEvents(),
+      this.getHomeTitleBtnEvent()
     );
 
     this.footer = new Footer();
@@ -107,6 +98,27 @@ export class Application {
       this.productController.getManufacturers(),
       this.getFilterEvents()
     );
+  }
+
+  getHomeTitleBtnEvent(){
+    return {
+      click: () => {        
+        render(this.app, [
+          this.header.getComponent(),
+          this.sidebar.getComponent(),
+          this.main.getComponent(),
+          this.footer.getComponent(),
+        ]);
+    
+        render(this.main.getComponent(), [
+          this.products.getComponent(),
+          this.pagination.getComponent(),
+        ]);
+    
+        this.toShow = this.productController.getAll();
+        this.show();
+      }
+    }
   }
 
   getFilterEvents() {
@@ -325,19 +337,6 @@ export class Application {
   // TODO
   getCartBtnEvents() {
     return {};
-=======
-    this.pagination = new Pagination(8);
-    
-    this.sideBar = new SideBar(sortingLabels, this.productController.getMinPrice(), this.productController.getMaxPrice(), availabilityLabels, this.productController.getManufacturers(), this.getFilterEvents());
-  }
-
-  getFilterEvents(){
-    return {};
-  }
-
-  getSelectLabels(){
-    return ['ss', 'dd', 'ff'];
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
   }
 
   productsToCards(products: Product[]) {
@@ -474,7 +473,6 @@ export class Application {
       this.footer.getComponent(),
     ]);
 
-<<<<<<< HEAD
     render(this.main.getComponent(), [
       this.products.getComponent(),
       this.pagination.getComponent(),
@@ -482,13 +480,6 @@ export class Application {
 
     this.toShow = this.productController.getAll();
     this.show();
-=======
-    render(this.app, this.products.getComponent());
-    this.app.append(this.sideBar.getComponent());
-    this.app.append(this.pagination.getComponent());
-    this.setPagination(this.productController.getAll());
-    this.setDisplayedProducts(this.productController.getAll());
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
   }
 
   run() {

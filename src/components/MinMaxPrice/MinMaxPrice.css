@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-.to {
-  font-size: 30px;
-}
-
-.min-max-price-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
-}
-=======
 .to{
     font-size: 30px;
 }
@@ -19,4 +7,3 @@
     justify-content: center;
     margin-bottom: 20px;
 }
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5

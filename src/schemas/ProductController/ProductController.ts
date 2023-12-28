@@ -65,10 +65,6 @@ export class ProductController {
     );
   }
 
-  getManufacturers(){
-    return this.productRepository.getManufacturers();
-  }
-
   search(search: string) {
     return this.productRepository.search(search);
   }
@@ -95,7 +91,6 @@ export class ProductController {
     return this.productRepository.getByPage(page, amount, products);
   }
 
-<<<<<<< HEAD
   getManufacturers() {
     return this.productRepository.getManufacturers();
   }
@@ -118,13 +113,4 @@ export class ProductController {
   filterByAvailability(products: Product[], availability: boolean[]) {
     return this.productRepository.filterByAvailability(products, availability);
   }
-=======
-  getMinPrice(){
-    return this.productRepository.getMinPrice();
-  }
-
-  getMaxPrice(){
-    return this.productRepository.getMaxPrice();
-  }
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
 }

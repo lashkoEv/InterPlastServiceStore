@@ -27,7 +27,7 @@ export class ProductRepository implements IRepository<Product> {
     title: string,
     isAvailable: boolean,
     description: string,
-    price: string,
+    price: number,
     quantity: number,
     manufacturer: string,
     imageURL: string
@@ -52,46 +52,6 @@ export class ProductRepository implements IRepository<Product> {
     }
   }
 
-  save(products: Product[] | null): void {
-    if (products) {
-      products.forEach((product) => {
-        localStorage.setItem(
-          product.getID().toString(),
-          JSON.stringify(product)
-        );
-      });
-    }
-
-    this.products.forEach((product) => {
-      localStorage.setItem(product.getID().toString(), JSON.stringify(product));
-    });
-  }
-
-  load(): void {
-    for (const key in localStorage) {
-      if (key.includes("product")) {
-        const productData = localStorage.getItem(key);
-
-        if (productData !== null) {
-          const parsedProduct = JSON.parse(productData);
-
-          this.add(
-            new Product(
-              parsedProduct.id,
-              parsedProduct.title,
-              parsedProduct.isAvailable,
-              parsedProduct.description,
-              parsedProduct.price,
-              parsedProduct.quantity,
-              parsedProduct.manufacturer,
-              parsedProduct.imageURL
-            )
-          );
-        }
-      }
-    }
-  }
-
   getLast() {
     return this.products[this.products.length - 1];
   }
@@ -110,10 +70,12 @@ export class ProductRepository implements IRepository<Product> {
     return products.sort((a, b) => {
       if (a.getTitle().toLowerCase() === b.getTitle().toLowerCase()) return 0;
 
-      if(productAvailability){
-        return true;
-      }      
-    })
+      if (a.getTitle().toLowerCase() < b.getTitle().toLowerCase()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   }
 
   sortByTitleDesc(products: Product[]) {
@@ -202,14 +164,6 @@ export class ProductRepository implements IRepository<Product> {
       const productPrice = el.getPrice();
 
       if (productPrice >= minPrice && productPrice <= maxPrice) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        console.log(el);
-=======
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
-        
-=======
->>>>>>> dev
         return true;
       }
     });
@@ -242,19 +196,4 @@ export class ProductRepository implements IRepository<Product> {
       .reduce((prev, curr) => (prev.getPrice() > curr.getPrice() ? prev : curr))
       .getPrice();
   }
-
-  getManufacturers(){
-    return this.products.map(product => {
-      return product.getManufacturer();
-    })
-  }
-
-  getMinPrice(){
-    return this.products.reduce((prev, curr)=> prev.getPrice() < curr.getPrice() ? prev : curr).getPrice()
-  }
-
-  getMaxPrice(){
-    return this.products.reduce((prev, curr)=> prev.getPrice() > curr.getPrice() ? prev : curr).getPrice()
-  }
 }
-

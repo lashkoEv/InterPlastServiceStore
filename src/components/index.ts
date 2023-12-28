@@ -5,11 +5,6 @@ import { ModalWindow } from "./ModalWindow/ModalWindow";
 import { AuthorizationWindow } from "./AuthorizationWindow/AuthorizationWindow";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
-<<<<<<< HEAD
-import { CheckBox } from "./CheckBox/CheckBox";
-<<<<<<< HEAD
-import { Selector } from "./Selector/Selector";
-=======
 import { Main } from "./Main/Main";
 import { Header } from "./Header/Header";
 import { Footer } from "./Footer/Footer";
@@ -20,11 +15,6 @@ import { ProductModalWindow } from "./ProductModalWindow/ProductModalWindow";
 import { CheckBox } from "./CheckBox/CheckBox";
 import { Select } from "./Select/Select";
 import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
->>>>>>> dev
-=======
-import { Select } from "./Select/Select";
-import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
->>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
 import { SideBar } from "./SideBar/SideBar";
 
 export {
@@ -35,12 +25,6 @@ export {
   AuthorizationWindow,
   ProductCard,
   ProductsWrapper,
-<<<<<<< HEAD
-  CheckBox,
-  Select,
-  MinMaxPrice,
-  SideBar
-=======
   Main,
   Header,
   Footer,
@@ -52,5 +36,4 @@ export {
   Select,
   MinMaxPrice,
   SideBar,
->>>>>>> dev
 };
