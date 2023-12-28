@@ -40,7 +40,9 @@ export class Application {
 
     this.spinner = new Spinner();
 
-    this.authorizationWindow = new AuthorizationWindow(this.getSendEvents());
+    this.authorizationWindow = new AuthorizationWindow(
+      this.getAuthorizationEvents()
+    );
 
     this.productController = new ProductController();
 
@@ -110,7 +112,7 @@ export class Application {
     return {};
   }
 
-  getSendEvents() {
+  getAuthorizationEvents() {
     return {
       click: () => {
         this.currentUser = this.userController.authorize(
