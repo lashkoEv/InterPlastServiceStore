@@ -1,94 +1,94 @@
-import { Component, append } from '../../core';
-import { CheckBox, Select, MinMaxPrice, Button } from '..';
-import { IComponent } from '../../interfaces';
+import { Component, append } from "../../core";
+import { CheckBox, Select, MinMaxPrice, Button } from "..";
+import { IComponent } from "../../interfaces";
 
+import "./SideBar.css";
 
-import './SideBar.css';
+export class SideBar implements IComponent {
+  private component: Component;
+  private select: Select;
+  private minMaxPrice: MinMaxPrice;
+  private manufacturers: HTMLElement[];
+  private availability: HTMLElement[];
+  private button: Button;
 
-export class SideBar implements IComponent{
-    private component: Component; 
-    private select: Select;
-    private minMaxPrice: MinMaxPrice;
-    private manufacturers: HTMLElement[];
-    private availability: HTMLElement[];
-    private button: Button;
+  constructor(
+    labels: string[],
+    minValue: number,
+    maxValue: number,
+    availability: string[],
+    manufacturers: string[],
+    btnEvents: {}
+  ) {
+    this.select = new Select(labels);
 
+    this.minMaxPrice = new MinMaxPrice(minValue, maxValue);
 
-    constructor(labels: string[], minValue: number, maxValue: number, availability: string[], manufacturers: string[], btnEvents: {}){
-        this.select = new Select(labels);
+    this.manufacturers = [];
 
-        this.minMaxPrice = new MinMaxPrice(minValue, maxValue);
+    this.setCheckboxArray(manufacturers, this.manufacturers);
 
-        this.manufacturers = [];
-    
-        this.setCheckboxArray(manufacturers, this.manufacturers);
-    
-        this.availability = [];
+    this.availability = [];
 
-        this.setCheckboxArray(availability, this.availability);
+    this.setCheckboxArray(availability, this.availability);
 
-        this.button = new Button({
-            className: 'apply-btn',
-            textContent: 'Apply',
-            events: btnEvents
-        })
+    this.button = new Button({
+      className: "apply-btn",
+      textContent: "Apply",
+      events: btnEvents,
+    });
 
-        this.component = new Component({
-            tagName: 'aside',
-            className: 'sideBar',
-            children: [
-                this.createTitle('Sort:'),
-                this.getSelect(),
-                this.createTitle('Price:'),
-                this.getMinMaxPrice(),
-                this.createTitle('Manufactorers:'),
-                ...this.getManufacturers(),
-                this.createTitle('Availability:'),
-                ...this.getAvailability(),
-                this.getButton()
-            ]
-        })
+    this.component = new Component({
+      tagName: "aside",
+      className: "sideBar",
+      children: [
+        this.createTitle("Sort:"),
+        this.getSelect(),
+        this.createTitle("Price:"),
+        this.getMinMaxPrice().getComponent(),
+        this.createTitle("Manufacturers:"),
+        ...this.getManufacturers(),
+        this.createTitle("Availability:"),
+        ...this.getAvailability(),
+        this.getButton(),
+      ],
+    });
+  }
 
-    }
+  private setCheckboxArray(labels: string[], array: HTMLElement[]) {
+    labels.forEach((label) => {
+      array.push(new CheckBox(label).getComponent());
+    });
+  }
 
-    private setCheckboxArray(labels: string[], array: HTMLElement[]){
-        labels.forEach((label)=>{
-            array.push(
-                new CheckBox(label).getComponent()
-            )
-          });
-    }
+  private createTitle(title: string) {
+    return new Component({
+      className: "sub-title",
+      textContent: title,
+    }).getComponent();
+  }
 
-    private createTitle(title: string){
-        return new Component({
-            className: 'sub-title',
-            textContent: title
-        }).getComponent()
-    }
+  getMinMaxPrice() {
+    return this.minMaxPrice;
+  }
 
-    getMinMaxPrice(){
-        return this.minMaxPrice.getComponent();
-    }
+  getSelect() {
+    return this.select.getComponent();
+  }
 
-    getSelect(){
-        return this.select.getComponent();
-    }
+  getButton() {
+    return this.button.getComponent();
+  }
 
-    getButton(){
-        return this.button.getComponent();
-    }
+  getManufacturers() {
+    return this.manufacturers;
+  }
 
-    getManufacturers(){
-        return this.manufacturers;
-    }
+  getAvailability() {
+    return this.availability;
+  }
 
-    getAvailability(){
-        return this.availability;
-    }
-
-    getComponent(): HTMLElement {
-        return this.component.getComponent();
-    }
-
-   
+  getComponent(): HTMLElement {
+    return this.component.getComponent();
+  }
 }

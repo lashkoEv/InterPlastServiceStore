@@ -1,6 +1,8 @@
 import { Component } from "../../core";
 import { IComponent, IHtmlData } from "../../interfaces";
 
+import "./Input.css";
+
 export class Input implements IComponent {
   private component: Component;
 
@@ -11,7 +13,7 @@ export class Input implements IComponent {
       tagName: "input",
       className,
       events,
-      attrs
+      attrs,
     });
   }
 

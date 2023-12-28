@@ -1,7 +1,10 @@
-.check-box{
-    margin-right: 10px;
+.check-box {
+  margin-right: 1rem;
+  font-size: 2rem;
 }
 
-.checkbox-wrapper{
-    margin-bottom: 5px;
+.checkbox-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
