@@ -50,9 +50,7 @@ export class Application {
     this.sideBar = new SideBar(sortingLabels, this.productController.getMinPrice(), this.productController.getMaxPrice(), availabilityLabels, this.productController.getManufacturers(), this.getFilterEvents());
   }
 
-  getFilterEvents(){
-    return {};
-  }
+  getFilterEvents(){}
 
   getSelectLabels(){
     return ['ss', 'dd', 'ff'];
