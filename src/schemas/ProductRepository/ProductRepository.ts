@@ -203,7 +203,10 @@ export class ProductRepository implements IRepository<Product> {
 
       if (productPrice >= minPrice && productPrice <= maxPrice) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         console.log(el);
+=======
+>>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
         
 =======
 >>>>>>> dev
@@ -239,4 +242,19 @@ export class ProductRepository implements IRepository<Product> {
       .reduce((prev, curr) => (prev.getPrice() > curr.getPrice() ? prev : curr))
       .getPrice();
   }
+
+  getManufacturers(){
+    return this.products.map(product => {
+      return product.getManufacturer();
+    })
+  }
+
+  getMinPrice(){
+    return this.products.reduce((prev, curr)=> prev.getPrice() < curr.getPrice() ? prev : curr).getPrice()
+  }
+
+  getMaxPrice(){
+    return this.products.reduce((prev, curr)=> prev.getPrice() > curr.getPrice() ? prev : curr).getPrice()
+  }
 }
+

@@ -7,6 +7,7 @@ import { ProductCard } from "./ProductCard/ProductCard";
 import { ProductsWrapper } from "./ProductsWrapper/ProductsWrapper";
 <<<<<<< HEAD
 import { CheckBox } from "./CheckBox/CheckBox";
+<<<<<<< HEAD
 import { Selector } from "./Selector/Selector";
 =======
 import { Main } from "./Main/Main";
@@ -20,6 +21,10 @@ import { CheckBox } from "./CheckBox/CheckBox";
 import { Select } from "./Select/Select";
 import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
 >>>>>>> dev
+=======
+import { Select } from "./Select/Select";
+import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
+>>>>>>> 5490f764b7d43a5e0a0d98205f209cc9020fa6d5
 import { SideBar } from "./SideBar/SideBar";
 
 export {
@@ -32,7 +37,8 @@ export {
   ProductsWrapper,
 <<<<<<< HEAD
   CheckBox,
-  Selector,
+  Select,
+  MinMaxPrice,
   SideBar
 =======
   Main,
