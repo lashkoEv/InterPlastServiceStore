@@ -477,7 +477,7 @@ export class Application {
         this.header.getLogoutBtn().className += ' hide';
         this.header.getLoginBtn().className = this.header.getLoginBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
 
-          this.header.changeVisibility();
+        this.header.changeVisibility();
       }
     }
   }
