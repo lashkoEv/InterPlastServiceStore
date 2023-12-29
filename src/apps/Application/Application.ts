@@ -78,6 +78,7 @@ export class Application {
       this.getSearchBtnEvents(),
       this.getAdminPanelBtnEvents(),
       this.getLoginBtnEvents(),
+      this.getLogutBtnEvent(),
       this.getCartBtnEvents(),
       this.getHomeTitleBtnEvent()
     );
@@ -431,7 +432,7 @@ export class Application {
     };
   }
 
-  getSendEvents() {
+  getSendEvents() { //loginEvent
     return {
       click: () => {
         this.currentUser = this.userController.authorize(
@@ -440,6 +441,9 @@ export class Application {
         );
 
         if (this.currentUser) {
+          this.header.getLoginBtn().className += ' hide';
+          this.header.getLogoutBtn().className = this.header.getLogoutBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
+          
           this.authorizationWindow.success();
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
@@ -463,6 +467,19 @@ export class Application {
         }
       },
     };
+  }
+
+  getLogutBtnEvent(){ //LogoutEvent
+    return {
+      click: () => {
+        this.currentUser = undefined;
+        
+        this.header.getLogoutBtn().className += ' hide';
+        this.header.getLoginBtn().className = this.header.getLoginBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
+
+          this.header.changeVisibility();
+      }
+    }
   }
 
   launchApp() {

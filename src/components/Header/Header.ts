@@ -9,6 +9,7 @@ export class Header implements IComponent {
   private searchBtn: Button;
   private adminPanelBtn: Button;
   private loginBtn: Button;
+  private logoutBtn: Button;
   private cartBtn: Button;
   private homeTitleBtn: Button;
 
@@ -16,6 +17,7 @@ export class Header implements IComponent {
     searchBtnEvent: {},
     adminPanelBtnEvent: {},
     loginBtnEvent: {},
+    logoutBtnEvent: {},
     cartBtnEvent: {},
     homeEvent: {}
   ) {
@@ -45,6 +47,11 @@ export class Header implements IComponent {
       className: "login__btn",
       events: loginBtnEvent,
     });
+    this.logoutBtn = new Button({
+      textContent: "Logout",
+      className: "logout__btn hide",
+      events: logoutBtnEvent,
+    });
     this.cartBtn = new Button({
       textContent: "Cart",
       className: "cart__btn",
@@ -60,6 +67,7 @@ export class Header implements IComponent {
         this.getSearchBtn(),
         this.getAdminPanelBtn(),
         this.getLoginBtn(),
+        this.getLogoutBtn(),
         this.getCartBtn(),
       ],
     });
@@ -86,6 +94,10 @@ export class Header implements IComponent {
 
   getLoginBtn() {
     return this.loginBtn.getComponent();
+  }
+
+  getLogoutBtn() {
+    return this.logoutBtn.getComponent();
   }
 
   getSearchBtn() {

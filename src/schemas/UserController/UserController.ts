@@ -15,6 +15,8 @@ export class UserController {
     this.userRepository.addMany(getUsers());
   }
 
+  removeUser(){}
+
   authorize(email: string, password: string) {
     return this.userRepository.validateEmailAndPassword(email, password);
   }
