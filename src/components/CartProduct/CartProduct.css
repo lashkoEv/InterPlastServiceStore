@@ -5,21 +5,21 @@
     border: 2px solid ;
     border-radius: 10px;
 }
-.image {
+.cart-product-image {
     width: 100px;
     margin: 20px;
 }
-.count {
+.cart-product-count {
     margin: 20px;
     font-size: 20px;
 }
-.price {
+.cart-product-price {
     margin: 10px;
 }
-.increase{
+.cart-product-increase{
     margin-right: 30px;
 }
-.deletebtn {
+.cart-product-deletebtn {
     margin: 20px;
     margin-left: 100px;
     background-color: brown;

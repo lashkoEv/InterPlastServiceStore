@@ -139,6 +139,10 @@ export class ProductRepository implements IRepository<Product> {
   //   * --- pagination (Yevheniia)
 
   getByPage(page: number, amount: number, products: Product[]): Product[] {
+    if (page < 0) {
+      return [];
+    }
+
     const start = (page - 1) * amount;
     let end = page * amount;
 
@@ -155,33 +159,41 @@ export class ProductRepository implements IRepository<Product> {
 
   //   * --- filters (Ruslan)
 
-  filterByPrice(products: Product[], HighestPrice: number) {
+  filterByPrice(products: Product[], minPrice: number, maxPrice: number) {
     return products.filter((el) => {
       const productPrice = el.getPrice();
 
-      if (productPrice <= HighestPrice) {
+      if (productPrice >= minPrice && productPrice <= maxPrice) {
         return true;
       }
     });
   }
 
-  filterByAvailability(products: Product[]) {
-    return products.filter((el) => {
-      const productAvailability = el.getAvailability();
+  filterByAvailability(products: Product[], availability: boolean[]) {
+    return products.filter((el) => availability.includes(el.getAvailability()));
+  }
 
-      if (productAvailability) {
-        return true;
-      }
+  filterByManufacturer(products: Product[], manufacturers: string[]) {
+    return products.filter((el) =>
+      manufacturers.includes(el.getManufacturer())
+    );
+  }
+
+  getManufacturers() {
+    return this.products.map((product) => {
+      return product.getManufacturer();
     });
   }
 
-  filterByManufactorer(products: Product[], manufacturer: string) {
-    return products.filter((el) => {
-      const productManufactorer = el.getManufacturer();
+  getMinPrice() {
+    return this.products
+      .reduce((prev, curr) => (prev.getPrice() < curr.getPrice() ? prev : curr))
+      .getPrice();
+  }
 
-      if (productManufactorer === manufacturer) {
-        return true;
-      }
-    });
+  getMaxPrice() {
+    return this.products
+      .reduce((prev, curr) => (prev.getPrice() > curr.getPrice() ? prev : curr))
+      .getPrice();
   }
 }

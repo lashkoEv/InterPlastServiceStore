@@ -1,7 +1,7 @@
 import { Button } from "..";
 import { Component } from "../../core";
 import { IComponent } from "../../interfaces";
-import { Product } from "../../schemas";
+import { ProductInCart } from "../../schemas";
 
 export class CartProduct implements IComponent {
   private component: Component;
@@ -11,53 +11,44 @@ export class CartProduct implements IComponent {
   private increase: Button;
   private price: Component;
   private deletebtn: Button;
-  private totalprice: Component;
 
-  constructor(product: Product, deleteEvents: {}, decreaseEvents: {}, increaseEvents: {} ) {
+  constructor(product: ProductInCart, deleteEvents: {} ) {
     this.img = new Component({
       tagName: "img",
-      className: "image",
+      className: "cart-product-image",
       attrs: {
-        src: product.getImageURL(),
+        src: product.getProduct().getImageURL(),
       },
     });
 
     this.decrease = new Button({
-      className: "decrease",
+      className: "cart-product-decrease",
       textContent: " < ",
-      events: decreaseEvents,
     });
 
     this.count = new Component({
       tagName: "div",
-      className: "count",
-      textContent: "1",
+      className: "cart-product-count",
+      textContent: `${product.getCount()}`,
     });
 
     this.increase = new Button({
-      className: "increase",
+      className: "cart-product-increase",
       textContent: " > ",
-      events: increaseEvents,
+      events: this.getIncrease(),
     });
 
     this.price = new Component({
       tagName: "div",
-      className: "price",
-      textContent: `${product.getPrice()} ₴`,
+      className: "cart-product-price",
+      textContent: `${product.getProduct().getPrice()} ₴`,
     });
 
     this.deletebtn = new Button({
-      tagName: "button",
-      className: "deletebtn",
+      className: "cart-product-deletebtn",
       textContent: "🗑️",
       events: deleteEvents,
     });
-
-    this.totalprice = new Component({
-        tagName: "div",
-        className: "totalprice",
-        textContent: ``,
-    })
 
     this.component = new Component({
       className: "cartproduct",
@@ -67,8 +58,7 @@ export class CartProduct implements IComponent {
         this.getCount(),
         this.getIncrease(),
         this.getPrice(),
-        this.getDeleteBtn(),
-        this.getTotalPrice(),
+        this.getDeleteBtn()
       ],
     });
   }
@@ -94,10 +84,4 @@ export class CartProduct implements IComponent {
   getDeleteBtn(): HTMLElement {
     return this.deletebtn.getComponent();
   }
-  getTotalPrice(): HTMLElement {
-    return this.totalprice.getComponent();
-  }
-//   getProdactCount(): HTMLElement {
-//     return CartRepository.length
-//   }
 }

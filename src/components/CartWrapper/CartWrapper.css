@@ -1,8 +1,14 @@
 .cartwrapper {
     height: 100vh;
-}
-.products {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
-  }
+}
+
+.totalprice {
+    margin: 20px;
+}
+
+.promocode {
+    margin: 20px;
+}

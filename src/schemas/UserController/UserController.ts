@@ -16,8 +16,6 @@ export class UserController {
   }
 
   authorize(email: string, password: string) {
-    return this.userRepository.validateEmailAndPassword(email, password)
-      ? this.userRepository.getByLoginAndPassword(email, password)
-      : undefined;
+    return this.userRepository.validateEmailAndPassword(email, password);
   }
 }

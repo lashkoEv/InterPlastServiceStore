@@ -1,20 +1,34 @@
 import {
   AuthorizationWindow,
   Button,
+  Header,
+  Main,
+  ModalWindow,
   ProductCard,
   ProductsWrapper,
   Spinner,
+  Footer,
+  AdminPanel,
+  ProductInTable,
+  ProductModalWindow,
+  SideBar,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { render } from "../../core";
+import { append, removeChildren, render } from "../../core";
+import { UserType } from "../../enums";
 import {
   Product,
   ProductController,
   User,
   UserController,
 } from "../../schemas";
+import { availabilityLabels, sortingLabels } from "../../utils";
 
 export class Application {
+  private toShow: Product[];
+
+  private MAX_COUNT = 8;
+
   private app: HTMLElement;
 
   private userController: UserController;
@@ -27,8 +41,23 @@ export class Application {
   private products: ProductsWrapper;
   private pagination: Pagination;
 
+  private header: Header;
+  private sidebar: SideBar;
+  private main: Main;
+  private footer: Footer;
+
+  private modalWindow: ModalWindow;
+
+  private adminPanel: AdminPanel;
+  private productModalWindow: ProductModalWindow;
+  private currentProduct: Product | null;
+
   constructor() {
     this.app = document.getElementById("app");
+
+    this.toShow = [];
+
+    this.modalWindow = null;
 
     this.userController = new UserController();
     this.currentUser = undefined;
@@ -41,16 +70,270 @@ export class Application {
 
     this.products = new ProductsWrapper();
 
-    this.pagination = new Pagination(8);
+    this.pagination = new Pagination(this.MAX_COUNT);
+
+    this.main = new Main();
+
+    this.header = new Header(
+      this.getSearchBtnEvents(),
+      this.getAdminPanelBtnEvents(),
+      this.getLoginBtnEvents(),
+      this.getCartBtnEvents()
+    );
+
+    this.footer = new Footer();
+
+    this.adminPanel = new AdminPanel(this.getAddEvents());
+
+    this.productModalWindow = new ProductModalWindow(this.getModalSendEvents());
+
+    this.currentProduct = null;
+
+    this.sidebar = new SideBar(
+      sortingLabels,
+      this.productController.getMinPrice(),
+      this.productController.getMaxPrice(),
+      availabilityLabels,
+      this.productController.getManufacturers(),
+      this.getFilterEvents()
+    );
+  }
+
+  getFilterEvents() {
+    return {
+      click: () => {
+        if (this.toShow.length <= 0) {
+          this.toShow = this.productController.getAll();
+        }
+
+        this.selectSorting(this.sidebar.getSelect().value);
+
+        this.filterByPrice();
+
+        this.filterByManufacturers();
+
+        this.filterByAvailability();
+
+        this.show();
+      },
+    };
+  }
+
+  selectSorting(criteria: string) {
+    switch (criteria) {
+      case sortingLabels[0]: {
+        this.toShow = this.productController.sortByTitle(true, this.toShow);
+        break;
+      }
+      case sortingLabels[1]: {
+        this.toShow = this.productController.sortByTitle(false, this.toShow);
+        break;
+      }
+      case sortingLabels[2]: {
+        this.toShow = this.productController.sortByPrice(true, this.toShow);
+        break;
+      }
+      case sortingLabels[3]: {
+        this.toShow = this.productController.sortByPrice(false, this.toShow);
+        break;
+      }
+      case sortingLabels[4]: {
+        this.toShow = this.productController.sortByAvailability(
+          true,
+          this.toShow
+        );
+        break;
+      }
+      case sortingLabels[5]: {
+        this.toShow = this.productController.sortByAvailability(
+          false,
+          this.toShow
+        );
+        break;
+      }
+    }
+  }
+
+  filterByPrice() {
+    this.toShow = this.productController.filterByPrice(
+      this.toShow,
+      this.sidebar.getMinMaxPrice().getMinValue(),
+      this.sidebar.getMinMaxPrice().getMaxValue()
+    );
+  }
+
+  filterByManufacturers() {
+    const checkBoxes = this.sidebar
+      .getManufacturers()
+      .filter((el) => el.children[0].checked);
+
+    const manufacturers = checkBoxes.map((el) => el.children[1].textContent);
+
+    if (manufacturers.length > 0) {
+      this.toShow = this.productController.filterByManufacturer(
+        this.toShow,
+        manufacturers
+      );
+    }
+  }
+
+  filterByAvailability() {
+    const checkBoxes = this.sidebar
+      .getAvailability()
+      .filter((el) => el.children[0].checked);
+
+    const availability = checkBoxes.map((el) =>
+      el.children[1].textContent === "Available" ? true : false
+    );
+
+    if (availability.length > 0) {
+      this.toShow = this.productController.filterByAvailability(
+        this.toShow,
+        availability
+      );
+    }
+  }
+
+  getModalSendEvents() {
+    return {
+      click: () => {
+        const info = this.productModalWindow.getFields();
+
+        if (this.currentProduct) {
+          this.productController.update(
+            this.currentProduct,
+            info.title,
+            this.currentProduct.getAvailability(),
+            info.description,
+            info.price,
+            info.quantity,
+            info.manufacturer,
+            this.currentProduct.getImageURL()
+          );
+        } else {
+          this.productController.add(
+            info.title,
+            true,
+            info.description,
+            info.price,
+            info.quantity,
+            info.manufacturer,
+            "public/images/image.png"
+          );
+        }
+
+        this.productModalWindow.getComponent().remove();
+        this.setProductsToAdminPanel();
+        this.currentProduct = null;
+      },
+    };
+  }
+
+  getAddEvents() {
+    return {
+      click: () => {
+        append(this.app, this.productModalWindow.getComponent());
+      },
+    };
+  }
+
+  getSearchBtnEvents() {
+    return {
+      click: () => {
+        this.toShow = this.productController.search(
+          this.header.getSearchInput().value
+        );
+
+        this.show();
+      },
+    };
+  }
+
+  show() {
+    this.setPagination(this.toShow);
+    this.setDisplayedProducts(this.toShow);
+    this.header.reset();
+  }
+
+  getAdminPanelBtnEvents() {
+    return {
+      click: () => {
+        render(this.main.getComponent(), this.adminPanel.getComponent());
+
+        this.setProductsToAdminPanel();
+      },
+    };
+  }
+
+  setProductsToAdminPanel() {
+    const products = this.productController.getAll();
+
+    const productsInTable = products.map((product) => {
+      return new ProductInTable(
+        product,
+        this.getEditEvents(product),
+        this.getDeleteEvents(product)
+      );
+    });
+
+    this.adminPanel.refresh(productsInTable);
+  }
+
+  getEditEvents(product: Product) {
+    return {
+      click: () => {
+        this.currentProduct = product;
+        append(this.app, this.productModalWindow.getComponent());
+        this.productModalWindow.setFields(product);
+      },
+    };
+  }
+
+  getDeleteEvents(product: Product) {
+    return {
+      click: () => {
+        this.productController.delete(product);
+
+        this.setProductsToAdminPanel();
+      },
+    };
+  }
+
+  getLoginBtnEvents() {
+    return {
+      click: () => {
+        render(this.app, this.spinner.getComponent());
+
+        setTimeout(() => {
+          this.authorizationWindow.reset();
+          render(this.app, this.authorizationWindow.getComponent());
+        }, 2000);
+      },
+    };
+  }
+
+  // TODO
+  getCartBtnEvents() {
+    return {};
   }
 
   productsToCards(products: Product[]) {
     return products.map(
-      (product) => new ProductCard(product, this.getBuyEvents())
+      (product) =>
+        new ProductCard(
+          product,
+          this.getBuyEvents(),
+          this.getShowEvents(product)
+        )
     );
   }
 
   setPagination(products: Product[]) {
+    if (products.length < this.MAX_COUNT) {
+      removeChildren(this.pagination.getComponent());
+      return;
+    }
+
     const count = Math.ceil(products.length / this.pagination.getMaxCount());
 
     const buttons: HTMLElement[] = [];
@@ -74,7 +357,7 @@ export class Application {
     }
 
     buttons[0].classList.add("active");
-    
+
     render(this.pagination.getComponent(), buttons);
   }
 
@@ -92,7 +375,38 @@ export class Application {
 
   getBuyEvents() {
     // TODO: when the cart will be ready
-    return {};
+    return {
+      click: () => {
+        console.log("add product to the cart");
+      },
+    };
+  }
+
+  getShowEvents(product: Product) {
+    return {
+      dblclick: () => {
+        if (this.modalWindow) {
+          this.modalWindow.getComponent().remove();
+        }
+
+        this.modalWindow = new ModalWindow(
+          product,
+          this.getBuyEvents(),
+
+          this.getCloseEvents()
+        );
+        this.modalWindow.changeVisibility();
+        this.app.append(this.modalWindow.getComponent());
+      },
+    };
+  }
+
+  getCloseEvents() {
+    return {
+      click: () => {
+        this.modalWindow.getComponent().remove();
+      },
+    };
   }
 
   getSendEvents() {
@@ -108,13 +422,19 @@ export class Application {
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
 
-          console.log("success authorization");
           console.log(this.currentUser);
-
-          setTimeout(() => {
-            // TODO: replace with showing the admin panel button in the header
-            // this.launchApp();
-          }, 2000);
+          if (this.currentUser.getUserType() === UserType.Admin) {
+            console.log("admin");
+            setTimeout(() => {
+              this.header.changeVisibility();
+              this.launchApp();
+            }, 2000);
+          } else if (this.currentUser.getUserType() !== UserType.Admin) {
+            console.log("guest");
+            setTimeout(() => {
+              this.launchApp();
+            }, 2000);
+          }
         } else {
           this.authorizationWindow.error();
           console.error("wrong email or password");
@@ -124,23 +444,26 @@ export class Application {
   }
 
   launchApp() {
-    // TODO: replace with adding header, main and footer
-    // TODO: main -> products + pagination + sort button
+    render(this.app, [
+      this.header.getComponent(),
+      this.sidebar.getComponent(),
+      this.main.getComponent(),
+      this.footer.getComponent(),
+    ]);
 
-    render(this.app, this.products.getComponent());
-    this.app.append(this.pagination.getComponent());
-    this.setPagination(this.productController.getAll());
-    this.setDisplayedProducts(this.productController.getAll());
+    render(this.main.getComponent(), [
+      this.products.getComponent(),
+      this.pagination.getComponent(),
+    ]);
+
+    this.toShow = this.productController.getAll();
+    this.show();
   }
 
   run() {
     render(this.app, this.spinner.getComponent());
 
     setTimeout(() => {
-      // TODO: onclick of auth button
-      // this.authorizationWindow.reset();
-      // render(this.app, this.authorizationWindow.getComponent());
-
       this.launchApp();
     }, 2000);
   }
