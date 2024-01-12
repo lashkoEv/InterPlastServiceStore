@@ -35,7 +35,6 @@ export class CartProduct implements IComponent {
     this.increase = new Button({
       className: "cart-product-increase",
       textContent: " > ",
-      events: this.getIncrease(),
     });
 
     this.price = new Component({

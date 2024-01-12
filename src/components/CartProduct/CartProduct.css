@@ -6,6 +6,7 @@
     border-radius: 10px;
 }
 .cart-product-image {
+    border-radius: 1rem;
     width: 100px;
     margin: 20px;
 }
