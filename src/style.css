@@ -39,13 +39,12 @@ h1 {
 
 #app {
   width: 100vw;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-  align-items: center;
   min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
 }
 
 .logo {

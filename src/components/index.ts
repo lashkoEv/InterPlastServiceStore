@@ -12,6 +12,10 @@ import { ProductInTable } from "./ProductInTable/ProductInTable";
 import { ProductTable } from "./ProductTable/ProductTable";
 import { AdminPanel } from "./AdminPanel/AdminPanel";
 import { ProductModalWindow } from "./ProductModalWindow/ProductModalWindow";
+import { CheckBox } from "./CheckBox/CheckBox";
+import { Select } from "./Select/Select";
+import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
+import { SideBar } from "./SideBar/SideBar";
 
 export {
   Button,
@@ -28,4 +32,8 @@ export {
   ProductTable,
   AdminPanel,
   ProductModalWindow,
+  CheckBox,
+  Select,
+  MinMaxPrice,
+  SideBar,
 };

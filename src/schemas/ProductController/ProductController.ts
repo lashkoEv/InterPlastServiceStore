@@ -90,4 +90,27 @@ export class ProductController {
   getByPage(page: number, amount: number, products: Product[]) {
     return this.productRepository.getByPage(page, amount, products);
   }
+
+  getManufacturers() {
+    return this.productRepository.getManufacturers();
+  }
+  getMinPrice() {
+    return this.productRepository.getMinPrice();
+  }
+
+  getMaxPrice() {
+    return this.productRepository.getMaxPrice();
+  }
+
+  filterByPrice(products: Product[], min: number, max: number) {
+    return this.productRepository.filterByPrice(products, min, max);
+  }
+
+  filterByManufacturer(products: Product[], manufacturers: string[]) {
+    return this.productRepository.filterByManufacturer(products, manufacturers);
+  }
+
+  filterByAvailability(products: Product[], availability: boolean[]) {
+    return this.productRepository.filterByAvailability(products, availability);
+  }
 }
