@@ -10,9 +10,8 @@
 }
 
 .title {
-  padding: 1rem;
+  padding: 1rem 0;
   font-size: 1rem;
-  /* text-align: start; */
 }
 
 .price {

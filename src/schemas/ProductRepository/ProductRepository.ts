@@ -139,6 +139,10 @@ export class ProductRepository implements IRepository<Product> {
   //   * --- pagination (Yevheniia)
 
   getByPage(page: number, amount: number, products: Product[]): Product[] {
+    if (page < 0) {
+      return [];
+    }
+
     const start = (page - 1) * amount;
     let end = page * amount;
 

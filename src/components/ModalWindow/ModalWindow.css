@@ -42,11 +42,10 @@
 .modal-buttons {
   display: flex;
   justify-content: space-around;
+  gap: 1rem;
   width: 40%;
 }
-.modal > .button {
-  width: 100%;
-  border-radius: 0;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+
+.modal-table {
+  text-align: start;
 }

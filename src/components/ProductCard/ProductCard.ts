@@ -13,7 +13,7 @@ export class ProductCard implements IComponent {
   private priceComponent: Component;
   private buyButton: Button;
 
-  constructor(product: Product, buyEvents: {}, modalEvents: {}) {
+  constructor(product: Product, buyEvents: {}, showEvents: {}) {
     this.imageComponent = new Component({
       tagName: "img",
       className: "image",
@@ -45,7 +45,7 @@ export class ProductCard implements IComponent {
         this.getPriceComponent(),
         this.getBuyButton(),
       ],
-      events: modalEvents,
+      events: showEvents,
     });
   }
 
