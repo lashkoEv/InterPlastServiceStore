@@ -1,0 +1,17 @@
+.cartwrapper {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+}
+
+.totalprice {
+    font-size: 1.5rem;
+    margin: 20px;
+}
+
+.promocode {
+    border: 2px solid black;
+    border-radius: 18px;
+    margin: 20px;
+}
