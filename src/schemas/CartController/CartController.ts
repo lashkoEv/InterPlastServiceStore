@@ -21,4 +21,34 @@ export class CartController {
       this.cartRepository.remove(found);
     }
   }
+
+  increaseCount(product: Product) {
+    let found = this.cartRepository.getByProduct(product);
+    if (found) {
+      found.increaseCount();
+    }
+  }
+
+  decreaseCount(product: Product) {
+    let found = this.cartRepository.getByProduct(product);
+    if (found) {
+      found.decreaseCount();
+      if (found.getCount() <= 0) {
+        this.remove(product);
+      }
+    }
+  }
+
+  getTotalPrice() {
+    return this.cartRepository.getTotalPrice();
+  }
+
+  getNewPrice() {
+    const totalDiscount = 0.2; 
+    const totalOriginalPrice = this.getTotalPrice();
+    const discountedPrice = totalOriginalPrice * (1 - totalDiscount);
+
+    return discountedPrice >= 0 ? discountedPrice : 0;
+  }
+
 }

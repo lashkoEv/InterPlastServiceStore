@@ -16,6 +16,8 @@ import { CheckBox } from "./CheckBox/CheckBox";
 import { Select } from "./Select/Select";
 import { MinMaxPrice } from "./MinMaxPrice/MinMaxPrice";
 import { SideBar } from "./SideBar/SideBar";
+import { CartProduct } from "./CartProduct/CartProduct";
+import { CartWrapper } from "./CartWrapper/CartWrapper";
 
 export {
   Button,
@@ -36,4 +38,6 @@ export {
   Select,
   MinMaxPrice,
   SideBar,
+  CartProduct,
+  CartWrapper,
 };
