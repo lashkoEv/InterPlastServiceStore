@@ -79,7 +79,7 @@ export class Application {
     this.products = new ProductsWrapper();
 
     this.cartController = new CartController();
-    this.cartWrapper = new CartWrapper(0, []);
+    this.cartWrapper = new CartWrapper(0, 0, []);
 
 
     this.pagination = new Pagination(this.MAX_COUNT);
@@ -338,6 +338,7 @@ export class Application {
 
         this.cartWrapper = new CartWrapper(
           this.cartController.getTotalPrice(),
+          this.cartController.getNewPrice(),
           products
         );
 

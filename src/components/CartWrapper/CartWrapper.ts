@@ -1,5 +1,5 @@
 import { CartProduct, Input } from "..";
-import { Component, append, render } from "../../core";
+import { Component, } from "../../core";
 import { IComponent } from "../../interfaces";
 import "./CartWrapper.css";
 
@@ -7,9 +7,10 @@ export class CartWrapper implements IComponent {
   private component: Component;
   private products: CartProduct[];
   private totalprice: Component;
+  private newPrice: Component;
   private promocode: Input;
 
-  constructor(totalprice: number, products: CartProduct[]) {
+  constructor(totalprice: number, newPrice: number, products: CartProduct[]) {
     this.products = products;
 
     const productsElements = this.products.map((product) =>
@@ -19,13 +20,25 @@ export class CartWrapper implements IComponent {
     this.totalprice = new Component({
       tagName: "div",
       className: "totalprice",
-      textContent: `Total Price: ${totalprice} ₴`,
+      textContent: totalprice !== -1 ? `${totalprice} $` : "",
+      // textContent: `Total Price: ${totalprice} ₴`,
     });
+    this.newPrice = new Component({
+      tagName: 'div',
+      className: 'newprice',
+      textContent: `${newPrice} ₴`
+    })
+    const price = new Component({
+      tagName: 'div',
+      className: 'price',
+      children: [this.getTotalPrice(), this.getNewPrice()],
+    }).getComponent()
+    
     this.promocode = new Input({
       className: "promocode",
       attrs: {
         placeholder: "Enter promocode",
-        disabled: true,
+        disabled: false,
       },
     });
 
@@ -34,7 +47,7 @@ export class CartWrapper implements IComponent {
       className: "cartwrapper",
       children: [
         ...productsElements,
-        this.getTotalPrice(),
+        price,
         this.getPromocode(),
       ],
     });
@@ -45,6 +58,9 @@ export class CartWrapper implements IComponent {
   }
   getTotalPrice(): HTMLElement {
     return this.totalprice.getComponent();
+  }
+  getNewPrice(): HTMLElement {
+    return this.newPrice.getComponent();
   }
   getPromocode(): HTMLElement {
     return this.promocode.getComponent();

@@ -28,5 +28,10 @@ export class ProductInCart {
   getTotalPrice() {
     return this.product.getPrice() * this.count;
   }
+  getNewPrice() {
+    const totalDiscount = 0.2; 
+    const discountedPrice = this.getTotalPrice() * (1 - totalDiscount);
 
+    return discountedPrice >= 0 ? discountedPrice : 0;
+  }
 }

@@ -42,4 +42,13 @@ export class CartController {
   getTotalPrice() {
     return this.cartRepository.getTotalPrice();
   }
+
+  getNewPrice() {
+    const totalDiscount = 0.2; 
+    const totalOriginalPrice = this.getTotalPrice();
+    const discountedPrice = totalOriginalPrice * (1 - totalDiscount);
+
+    return discountedPrice >= 0 ? discountedPrice : 0;
+  }
+
 }
