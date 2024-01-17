@@ -7,13 +7,14 @@
   gap: 0.3rem;
   padding: 2rem;
   grid-area: sidebar;
+  color: aliceblue;
 }
 
 .sub-title {
-    font-size: 20px;
-    padding: 1rem;
+  font-size: 20px;
+  padding: 1rem;
 }
 
 .sideBar > .button {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }

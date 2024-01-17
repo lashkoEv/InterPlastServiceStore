@@ -12,17 +12,21 @@ import {
   ProductInTable,
   ProductModalWindow,
   SideBar,
+  CartProduct,
 } from "../../components";
+import { CartWrapper } from "../../components/CartWrapper/CartWrapper";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { append, removeChildren, render } from "../../core";
 import { UserType } from "../../enums";
 import {
+  CartController,
   Product,
   ProductController,
+  ProductInCart,
   User,
   UserController,
 } from "../../schemas";
-import { availabilityLabels, sortingLabels } from "../../utils";
+import { availabilityLabels, getProducts, sortingLabels } from "../../utils";
 
 export class Application {
   private toShow: Product[];
@@ -38,6 +42,9 @@ export class Application {
 
   private spinner: Spinner;
   private authorizationWindow: AuthorizationWindow;
+
+  private cartWrapper: CartWrapper;
+  private cartController: CartController;
 
   private products: ProductsWrapper;
   private pagination: Pagination;
@@ -70,6 +77,10 @@ export class Application {
     this.productController = new ProductController();
 
     this.products = new ProductsWrapper();
+
+    this.cartController = new CartController();
+    this.cartWrapper = new CartWrapper(0, []);
+
 
     this.pagination = new Pagination(this.MAX_COUNT);
 
@@ -315,15 +326,66 @@ export class Application {
 
   // TODO
   getCartBtnEvents() {
-    return {};
+    return {
+      click: () => {
+        const products = this.cartController
+          .getAll()
+          .map((item) => new CartProduct(
+            item,
+            this.getCartIncreaseEvents(item.getProduct()),
+            this.getCartDecreaseEvents(item.getProduct()),
+            this.getCartDeleteEvents(item.getProduct())));
+
+        this.cartWrapper = new CartWrapper(
+          this.cartController.getTotalPrice(),
+          products
+        );
+
+        render(this.app, [
+          this.header.getComponent(),
+          this.cartWrapper.getComponent(),
+          this.footer.getComponent(),
+        ]);
+      },
+    };
   }
+
+  // TODO
+  getCartDeleteEvents(product: Product) {
+    return {
+      click: () => {
+        this.cartController.remove(product);
+        this.getCartBtnEvents().click();
+      },
+    };
+  }
+
+  getCartIncreaseEvents(product: Product){
+    return {
+      click: () => {
+      this.cartController.increaseCount(product);
+      this.getCartBtnEvents().click();
+      }
+    }
+  }
+
+  getCartDecreaseEvents(product: Product){
+    return {
+      click: () => {
+        this.cartController.decreaseCount(product);
+        this.getCartBtnEvents().click();
+        }
+    }
+  }
+
+
 
   productsToCards(products: Product[]) {
     return products.map(
       (product) =>
         new ProductCard(
           product,
-          this.getBuyEvents(),
+          this.getBuyEvents(product),
           this.getShowEvents(product)
         )
     );
@@ -374,11 +436,10 @@ export class Application {
     this.products.setProducts(cards);
   }
 
-  getBuyEvents() {
-    // TODO: when the cart will be ready
+  getBuyEvents(product: Product) {
     return {
       click: () => {
-        console.log("add product to the cart");
+        this.cartController.add(product);
       },
     };
   }
@@ -392,7 +453,7 @@ export class Application {
 
         this.modalWindow = new ModalWindow(
           product,
-          this.getBuyEvents(),
+          this.getBuyEvents(product),
 
           this.getCloseEvents()
         );
@@ -402,20 +463,12 @@ export class Application {
     };
   }
 
-  getCloseEvents() {
-    return {
-      click: () => {
-        this.modalWindow.getComponent().remove();
-      },
-    };
-  }
-
   getModalEvents(product: Product) {
     return {
       dblclick: () => {
         this.modalWindow = new ModalWindow(
           product,
-          this.getBuyEvents(),
+          this.getBuyEvents(product),
           this.getCloseEvents()
         );
         this.modalWindow.changeVisibility();

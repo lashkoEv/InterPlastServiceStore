@@ -1,7 +1,8 @@
 import { Button } from "..";
 import { Component } from "../../core";
 import { IComponent } from "../../interfaces";
-import { ProductInCart } from "../../schemas";
+import {  ProductInCart } from "../../schemas";
+import "./CartProduct.css";
 
 export class CartProduct implements IComponent {
   private component: Component;
@@ -11,36 +12,41 @@ export class CartProduct implements IComponent {
   private increase: Button;
   private price: Component;
   private deletebtn: Button;
+  private productInCart: ProductInCart;
 
-  constructor(product: ProductInCart, deleteEvents: {} ) {
+  constructor(productInCart: ProductInCart, increaseEvents: {}, decreaseEvents: {}, deleteEvents: {}) {
+    this.productInCart = productInCart;
+
     this.img = new Component({
       tagName: "img",
       className: "cart-product-image",
       attrs: {
-        src: product.getProduct().getImageURL(),
+        src: productInCart.getProduct().getImageURL(),
       },
     });
 
     this.decrease = new Button({
       className: "cart-product-decrease",
       textContent: " < ",
+      events: decreaseEvents,
     });
 
     this.count = new Component({
       tagName: "div",
       className: "cart-product-count",
-      textContent: `${product.getCount()}`,
+      textContent: `${productInCart.getCount()}`,
     });
 
     this.increase = new Button({
       className: "cart-product-increase",
       textContent: " > ",
+      events: increaseEvents,
     });
 
     this.price = new Component({
       tagName: "div",
       className: "cart-product-price",
-      textContent: `${product.getProduct().getPrice()} ₴`,
+      textContent: `${productInCart.getProduct().getPrice()} ₴`,
     });
 
     this.deletebtn = new Button({
@@ -57,7 +63,7 @@ export class CartProduct implements IComponent {
         this.getCount(),
         this.getIncrease(),
         this.getPrice(),
-        this.getDeleteBtn()
+        this.getDeleteBtn(),
       ],
     });
   }
@@ -65,22 +71,34 @@ export class CartProduct implements IComponent {
   getComponent(): HTMLElement {
     return this.component.getComponent();
   }
+
   getImg(): HTMLElement {
     return this.img.getComponent();
   }
+
   getDecrease(): HTMLElement {
     return this.decrease.getComponent();
   }
+
   getCount(): HTMLElement {
     return this.count.getComponent();
   }
+
   getIncrease(): HTMLElement {
     return this.increase.getComponent();
   }
+
   getPrice(): HTMLElement {
     return this.price.getComponent();
   }
+
   getDeleteBtn(): HTMLElement {
     return this.deletebtn.getComponent();
   }
+
+  getProductInCart(): ProductInCart {
+    return this.productInCart;
+  }
+
+  
 }

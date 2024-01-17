@@ -21,4 +21,25 @@ export class CartController {
       this.cartRepository.remove(found);
     }
   }
+
+  increaseCount(product: Product) {
+    let found = this.cartRepository.getByProduct(product);
+    if (found) {
+      found.increaseCount();
+    }
+  }
+
+  decreaseCount(product: Product) {
+    let found = this.cartRepository.getByProduct(product);
+    if (found) {
+      found.decreaseCount();
+      if (found.getCount() <= 0) {
+        this.remove(product);
+      }
+    }
+  }
+
+  getTotalPrice() {
+    return this.cartRepository.getTotalPrice();
+  }
 }

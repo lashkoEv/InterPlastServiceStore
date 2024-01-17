@@ -21,7 +21,12 @@ export class ProductInCart {
     this.count++;
   }
 
+  decreaseCount() {
+    this.count--;
+  }
+
   getTotalPrice() {
     return this.product.getPrice() * this.count;
   }
+
 }

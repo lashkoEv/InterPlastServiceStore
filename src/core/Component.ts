@@ -2,6 +2,13 @@ import { append } from ".";
 import { IComponent, IHtmlData } from "../interfaces";
 
 export class Component implements IComponent {
+  textContent: string;
+  setChildren(arg0: HTMLElement[]) {
+    throw new Error("Method not implemented.");
+  }
+  replaceChildren(arg0: HTMLElement) {
+    throw new Error("Method not implemented.");
+  }
   private component: HTMLElement;
 
   constructor({
