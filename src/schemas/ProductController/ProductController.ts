@@ -100,7 +100,7 @@ export class ProductController {
 
   getMaxPrice() {
     return this.productRepository.getMaxPrice();
-  }
+  } 
 
   filterByPrice(products: Product[], min: number, max: number) {
     return this.productRepository.filterByPrice(products, min, max);

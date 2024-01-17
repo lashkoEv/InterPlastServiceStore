@@ -54,7 +54,7 @@ export class SideBar implements IComponent {
       ],
     });
   }
-
+ 
   private setCheckboxArray(labels: string[], array: HTMLElement[]) {
     labels.forEach((label) => {
       array.push(new CheckBox(label).getComponent());
