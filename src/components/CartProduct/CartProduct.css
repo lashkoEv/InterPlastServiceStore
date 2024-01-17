@@ -1,0 +1,27 @@
+.cartproduct {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid ;
+  border-radius: 10px;
+}
+.cart-product-image {
+  border-radius: 1rem;
+  width: 100px;
+  margin: 20px;
+}
+.cart-product-count {
+  margin: 20px;
+  font-size: 20px;
+}
+.cart-product-price {
+  margin: 10px;
+}
+.cart-product-increase{
+  margin-right: 30px;
+}
+.cart-product-deletebtn {
+  margin: 20px;
+  margin-left: 100px;
+  background-color: brown;
+}

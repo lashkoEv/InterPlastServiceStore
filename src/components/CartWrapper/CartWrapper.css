@@ -1,0 +1,35 @@
+.cartwrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  width: 96vw;
+  padding: 1rem;
+}
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid;
+}
+
+.totalprice {
+  font-size: 1rem;
+  margin: 0px;
+  text-decoration: line-through;
+  color: rgb(128, 128, 128);
+  padding: 10px;
+}
+
+.newprice {
+  font-size: 2rem;
+margin-left: 13px;
+}
+
+.promocode {
+  border: 2px solid black;
+  border-radius: 18px;
+  width: 10%;
+}

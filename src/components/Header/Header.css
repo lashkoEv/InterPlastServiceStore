@@ -20,3 +20,11 @@
 .header > .input {
     width: 20%;
 }
+
+.home-title-btn{
+  background-color: inherit;
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+  font-family:'Courier New', Courier, monospace;
+}

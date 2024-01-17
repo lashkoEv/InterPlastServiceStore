@@ -13,7 +13,13 @@ export class CartRepository implements IRepository<ProductInCart> {
   }
 
   add(product: ProductInCart): void {
-    this.products.push(product);
+    const found = this.getByProduct(product.getProduct());
+
+    if(found === undefined) {
+      this.products.push(product);
+    }else {
+      found.increaseCount();
+    }
   }
 
   addMany(products: ProductInCart[]): void {
@@ -29,5 +35,11 @@ export class CartRepository implements IRepository<ProductInCart> {
 
   getByProduct(product: Product) {
     return this.products.find((element) => element.getProduct() === product);
+  }
+
+  getTotalPrice() {
+    let sum = 0;
+    this.products.forEach((product) => sum += product.getTotalPrice());
+    return sum;
   }
 }
