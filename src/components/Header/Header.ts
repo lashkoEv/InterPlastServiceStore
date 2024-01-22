@@ -1,7 +1,7 @@
-import { Button, Input } from "..";
-import { Component } from "../../core";
-import { IComponent } from "../../interfaces";
-import "./Header.css";
+import { Button, Input } from '..';
+import { Component } from '../../core';
+import { IComponent } from '../../interfaces';
+import './Header.css';
 
 export class Header implements IComponent {
   private component: Component;
@@ -12,6 +12,10 @@ export class Header implements IComponent {
   private logoutBtn: Button;
   private cartBtn: Button;
   private homeTitleBtn: Button;
+<<<<<<< HEAD
+=======
+  private logoutBtn: Button;
+>>>>>>> dev
 
   constructor(
     searchBtnEvent: {},
@@ -21,30 +25,46 @@ export class Header implements IComponent {
     cartBtnEvent: {},
     homeEvent: {}
   ) {
+<<<<<<< HEAD
     this.homeTitleBtn = new Button({
       className: 'home-title-btn',
       textContent: 'Web-site name',
       events: homeEvent
     });
+=======
+    this.logoutBtn = new Button({
+      textContent: "Logout",
+      className: "logout__btn hide",
+      events: logoutBtnEvent,
+    });
+
+    this.homeTitleBtn = new Button({
+      className: 'home-title-btn',
+      textContent: 'InterPlastService',
+      events: homeEvent
+    });
+
+
+>>>>>>> dev
     this.searchInput = new Input({
-      className: "search__input",
       attrs: {
-        placeholder: "Search",
+        placeholder: 'Search',
+        className: 'search__input',
       },
     });
     this.searchBtn = new Button({
-      textContent: "Search",
-      className: "search__btn",
+      textContent: 'Search',
+      className: 'search__btn',
       events: searchBtnEvent,
     });
     this.adminPanelBtn = new Button({
-      textContent: "Admin Panel",
-      className: "admin__panel__btn hide",
+      textContent: 'Admin Panel',
+      className: 'admin__panel__btn',
       events: adminPanelBtnEvent,
     });
     this.loginBtn = new Button({
-      textContent: "Login",
-      className: "login__btn",
+      textContent: 'Login',
+      className: 'login__btn',
       events: loginBtnEvent,
     });
     this.logoutBtn = new Button({
@@ -53,19 +73,19 @@ export class Header implements IComponent {
       events: logoutBtnEvent,
     });
     this.cartBtn = new Button({
-      textContent: "Cart",
-      className: "cart__btn",
+      textContent: 'Cart',
+      className: 'cart__btn',
       events: cartBtnEvent,
     });
 
     this.component = new Component({
-      tagName: "header",
-      className: "header",
+      tagName: 'header',
+      className: 'header',
       children: [
         this.getHomeTitleBtn(),
         this.getSearchInput(),
         this.getSearchBtn(),
-        this.getAdminPanelBtn(),
+
         this.getLoginBtn(),
         this.getLogoutBtn(),
         this.getCartBtn(),
@@ -84,6 +104,19 @@ export class Header implements IComponent {
     return this.homeTitleBtn.getComponent()
   }
 
+<<<<<<< HEAD
+=======
+  addAdminBtn(): void {
+    this.getComponent().append(this.getAdminPanelBtn());
+  }
+  removeAdminBtn(): void {
+    this.getAdminPanelBtn().remove();
+  }
+  getLogoutBtn() {
+    return this.logoutBtn.getComponent();
+  }
+
+>>>>>>> dev
   getSearchInput() {
     return this.searchInput.getComponent();
   }
@@ -109,6 +142,6 @@ export class Header implements IComponent {
   }
 
   reset() {
-    this.getSearchInput().value = "";
+    this.getSearchInput().value = '';
   }
 }

@@ -12,11 +12,14 @@ import {
   ProductInTable,
   ProductModalWindow,
   SideBar,
+  CartWrapper,
+  CartProduct,
 } from "../../components";
 import { Pagination } from "../../components/Pagination/Pagination";
-import { append, removeChildren, render } from "../../core";
+import { Component, append, removeChildren, render } from "../../core";
 import { UserType } from "../../enums";
 import {
+  CartController,
   Product,
   ProductController,
   User,
@@ -52,6 +55,9 @@ export class Application {
   private productModalWindow: ProductModalWindow;
   private currentProduct: Product | null;
 
+  private cartWrapper: CartWrapper;
+  private cartController: CartController;
+
   constructor() {
     this.app = document.getElementById("app");
 
@@ -64,7 +70,9 @@ export class Application {
 
     this.spinner = new Spinner();
 
-    this.authorizationWindow = new AuthorizationWindow(this.getSendEvents());
+    this.authorizationWindow = new AuthorizationWindow(
+      this.getAuthorizationEvents()
+    );
 
     this.productController = new ProductController();
 
@@ -99,6 +107,30 @@ export class Application {
       this.productController.getManufacturers(),
       this.getFilterEvents()
     );
+
+    this.cartController = new CartController();
+    this.cartWrapper = new CartWrapper(0, 0, []);
+  }
+
+  getHomeTitleBtnEvent() {
+    return {
+      click: () => {
+        render(this.app, [
+          this.header.getComponent(),
+          this.sidebar.getComponent(),
+          this.main.getComponent(),
+          this.footer.getComponent(),
+        ]);
+
+        render(this.main.getComponent(), [
+          this.products.getComponent(),
+          this.pagination.getComponent(),
+        ]);
+
+        this.toShow = this.productController.getAll();
+        this.show();
+      },
+    };
   }
 
   getHomeTitleBtnEvent(){
@@ -281,8 +313,9 @@ export class Application {
   getAdminPanelBtnEvents() {
     return {
       click: () => {
-        render(this.main.getComponent(), this.adminPanel.getComponent());
-
+        const sec = new Component({className: "adm-wrapper"}).getComponent();
+        render(this.app, [this.header.getComponent(), sec, this.footer.getComponent()]);
+        render(sec, this.adminPanel.getComponent());
         this.setProductsToAdminPanel();
       },
     };
@@ -335,9 +368,63 @@ export class Application {
     };
   }
 
-  // TODO
   getCartBtnEvents() {
-    return {};
+    return {
+      click: () => {
+        const products = this.cartController
+          .getAll()
+          .map(
+            (item) =>
+              new CartProduct(
+                item,
+                this.getCartIncreaseEvents(item.getProduct()),
+                this.getCartDecreaseEvents(item.getProduct()),
+                this.getCartDeleteEvents(item.getProduct())
+              )
+          );
+
+        this.cartWrapper = new CartWrapper(
+          this.cartController.getTotalPrice(),
+          this.cartController.getNewPrice(),
+          products
+        );
+
+        render(this.app, [
+          this.header.getComponent(),
+          this.cartWrapper.getComponent(),
+          this.footer.getComponent(),
+        ]);
+      },
+    };
+  }
+
+  // TODO
+  getCartDeleteEvents(product: Product) {
+    return {
+      click: () => {
+        this.cartController.remove(product);
+        this.getCartBtnEvents().click();
+      },
+    };
+  }
+
+  getCartIncreaseEvents(product: Product) {
+    return {
+      click: () => {
+        this.cartController.increaseCount(product);
+        this.getCartBtnEvents().click();
+        
+      },
+    };
+  }
+
+  getCartDecreaseEvents(product: Product) {
+    return {
+      click: () => {
+        this.cartController.decreaseCount(product);
+        this.getCartBtnEvents().click();
+      },
+    };
   }
 
   productsToCards(products: Product[]) {
@@ -345,7 +432,7 @@ export class Application {
       (product) =>
         new ProductCard(
           product,
-          this.getBuyEvents(),
+          this.getBuyEvents(product),
           this.getShowEvents(product)
         )
     );
@@ -396,11 +483,10 @@ export class Application {
     this.products.setProducts(cards);
   }
 
-  getBuyEvents() {
-    // TODO: when the cart will be ready
+  getBuyEvents(product: Product) {
     return {
       click: () => {
-        console.log("add product to the cart");
+        this.cartController.add(product);
       },
     };
   }
@@ -414,7 +500,7 @@ export class Application {
 
         this.modalWindow = new ModalWindow(
           product,
-          this.getBuyEvents(),
+          this.getBuyEvents(product),
 
           this.getCloseEvents()
         );
@@ -432,7 +518,11 @@ export class Application {
     };
   }
 
+<<<<<<< HEAD
   getSendEvents() { //loginEvent
+=======
+  getAuthorizationEvents() {
+>>>>>>> dev
     return {
       click: () => {
         this.currentUser = this.userController.authorize(
@@ -441,9 +531,19 @@ export class Application {
         );
 
         if (this.currentUser) {
+<<<<<<< HEAD
           this.header.getLoginBtn().className += ' hide';
           this.header.getLogoutBtn().className = this.header.getLogoutBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
           
+=======
+          this.header.getLoginBtn().className += " hide";
+          this.header.getLogoutBtn().className = this.header
+            .getLogoutBtn()
+            .className.split(" ")
+            .filter((word) => word !== "hide")
+            .join(" ");
+
+>>>>>>> dev
           this.authorizationWindow.success();
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
@@ -452,12 +552,13 @@ export class Application {
           if (this.currentUser.getUserType() === UserType.Admin) {
             console.log("admin");
             setTimeout(() => {
-              this.header.changeVisibility();
+              this.header.addAdminBtn();
               this.launchApp();
             }, 2000);
           } else if (this.currentUser.getUserType() !== UserType.Admin) {
             console.log("guest");
             setTimeout(() => {
+              this.header.removeAdminBtn();
               this.launchApp();
             }, 2000);
           }
@@ -469,6 +570,7 @@ export class Application {
     };
   }
 
+<<<<<<< HEAD
   getLogutBtnEvent(){ //LogoutEvent
     return {
       click: () => {
@@ -480,6 +582,24 @@ export class Application {
         this.header.changeVisibility();
       }
     }
+=======
+  getLogutBtnEvent() {
+    //LogoutEvent
+    return {
+      click: () => {
+        this.currentUser = undefined;
+
+        this.header.getLogoutBtn().className += " hide";
+        this.header.getLoginBtn().className = this.header
+          .getLoginBtn()
+          .className.split(" ")
+          .filter((word) => word !== "hide")
+          .join(" ");
+
+        this.header.changeVisibility();
+      },
+    };
+>>>>>>> dev
   }
 
   launchApp() {
