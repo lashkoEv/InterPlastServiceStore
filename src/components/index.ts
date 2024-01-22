@@ -38,10 +38,6 @@ export {
   Select,
   MinMaxPrice,
   SideBar,
-<<<<<<< HEAD
-};
-=======
   CartProduct,
   CartWrapper,
 };
->>>>>>> dev

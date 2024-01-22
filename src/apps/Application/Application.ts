@@ -518,11 +518,7 @@ export class Application {
     };
   }
 
-<<<<<<< HEAD
-  getSendEvents() { //loginEvent
-=======
   getAuthorizationEvents() {
->>>>>>> dev
     return {
       click: () => {
         this.currentUser = this.userController.authorize(
@@ -531,11 +527,6 @@ export class Application {
         );
 
         if (this.currentUser) {
-<<<<<<< HEAD
-          this.header.getLoginBtn().className += ' hide';
-          this.header.getLogoutBtn().className = this.header.getLogoutBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
-          
-=======
           this.header.getLoginBtn().className += " hide";
           this.header.getLogoutBtn().className = this.header
             .getLogoutBtn()
@@ -543,7 +534,6 @@ export class Application {
             .filter((word) => word !== "hide")
             .join(" ");
 
->>>>>>> dev
           this.authorizationWindow.success();
           this.authorizationWindow.reset();
           render(this.app, this.spinner.getComponent());
@@ -570,19 +560,6 @@ export class Application {
     };
   }
 
-<<<<<<< HEAD
-  getLogutBtnEvent(){ //LogoutEvent
-    return {
-      click: () => {
-        this.currentUser = undefined;
-        
-        this.header.getLogoutBtn().className += ' hide';
-        this.header.getLoginBtn().className = this.header.getLoginBtn().className.split(' ').filter(word => word !== 'hide').join(' ');
-
-        this.header.changeVisibility();
-      }
-    }
-=======
   getLogutBtnEvent() {
     //LogoutEvent
     return {
@@ -599,7 +576,6 @@ export class Application {
         this.header.changeVisibility();
       },
     };
->>>>>>> dev
   }
 
   launchApp() {

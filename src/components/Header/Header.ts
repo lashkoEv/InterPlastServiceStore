@@ -12,10 +12,7 @@ export class Header implements IComponent {
   private logoutBtn: Button;
   private cartBtn: Button;
   private homeTitleBtn: Button;
-<<<<<<< HEAD
-=======
   private logoutBtn: Button;
->>>>>>> dev
 
   constructor(
     searchBtnEvent: {},
@@ -25,13 +22,6 @@ export class Header implements IComponent {
     cartBtnEvent: {},
     homeEvent: {}
   ) {
-<<<<<<< HEAD
-    this.homeTitleBtn = new Button({
-      className: 'home-title-btn',
-      textContent: 'Web-site name',
-      events: homeEvent
-    });
-=======
     this.logoutBtn = new Button({
       textContent: "Logout",
       className: "logout__btn hide",
@@ -45,7 +35,6 @@ export class Header implements IComponent {
     });
 
 
->>>>>>> dev
     this.searchInput = new Input({
       attrs: {
         placeholder: 'Search',
@@ -104,8 +93,6 @@ export class Header implements IComponent {
     return this.homeTitleBtn.getComponent()
   }
 
-<<<<<<< HEAD
-=======
   addAdminBtn(): void {
     this.getComponent().append(this.getAdminPanelBtn());
   }
@@ -116,7 +103,6 @@ export class Header implements IComponent {
     return this.logoutBtn.getComponent();
   }
 
->>>>>>> dev
   getSearchInput() {
     return this.searchInput.getComponent();
   }
